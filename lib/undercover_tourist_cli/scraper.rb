@@ -4,10 +4,15 @@ require 'pry'
 require 'colorize'
 
 class Scraper 
-  attr_accessor :city
+  attr_accessor :city, :page
   
   @base_path = "https://www.undercovertourist.com/"
-
+  @city_attractions = {}
+  
+  def self.parse_page
+    @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
+    return @page
+  end
   
   def self.city_selector
     puts "---------------------------------"
@@ -32,15 +37,26 @@ class Scraper
       puts "Please try again."
       Scraper.city_selector
     end
-    Scraper.scrape_attractions
+    Scraper.scrape_city_summary
   end 
 
-  def self.scrape_attractions
+  def self.scrape_city_summary
     @city = @city.downcase
-    page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
-    parsed_page = page.css(".cityblurb")
-    puts parsed_page
+    Scraper.parse_page
+    @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
+    puts @city_attractions
+    Scraper.scrape_city_attractions
   end 
+  
+  def self.scrape_city_attractions
+    @city = @city.downcase
+    Scraper.parse_page
+    parsed_page = @page.css(".mixitup-container")
+    puts parsed_page
+    
+  
+  end 
+  
   
   city_selector
 end 
