@@ -4,10 +4,12 @@ require 'pry'
 require 'colorize'
 
 class Scraper 
-  attr_accessor :city, :page
+  attr_accessor :city, :page, :attractions
   
   @base_path = "https://www.undercovertourist.com/"
   @city_attractions = {}
+  @attractions = []
+  
   
   def self.parse_page
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
@@ -50,9 +52,12 @@ class Scraper
   
   def self.scrape_city_attractions
     @city = @city.downcase
-    Scraper.parse_page
-    parsed_page = @page.css(".mixitup-container")
-    puts parsed_page
+    @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
+    node = @page.css('.tile .tiletitle')
+    node.each do |node|
+      @attractions << node.text
+    end
+    puts @attractions
     
   
   end 
