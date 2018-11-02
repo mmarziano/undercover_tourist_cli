@@ -58,11 +58,19 @@ class Scraper
        @attractions << node.text
       end
     @city_attractions[:attractions] = @attractions
-    puts @city_attractions
-    
-  
+        puts "-------------------------------"
+        puts "Below is a list of attractions:"
+        puts "-------------------------------"
+        i = 1
+          @attractions.each do |attraction|
+            puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
+            i += 1
+          end 
   end 
   
+  def self.scrape_attraction_details
+    
+  end 
   
   city_selector
 end 
