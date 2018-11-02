@@ -52,12 +52,13 @@ class Scraper
   
   def self.scrape_city_attractions
     @city = @city.downcase
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
+    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
     node = @page.css('.tile .tiletitle')
-    node.each do |node|
-      @attractions << node.text
-    end
-    puts @attractions
+      node.each do |node|
+       @attractions << node.text
+      end
+    @city_attractions[:attractions] = @attractions
+    puts @city_attractions
     
   
   end 
