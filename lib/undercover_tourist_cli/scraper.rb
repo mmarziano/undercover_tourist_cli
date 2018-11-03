@@ -41,6 +41,11 @@ class Scraper
     end
     Scraper.scrape_city_summary
   end 
+  
+  def self.select_attraction
+    input = gets.strip.downcase
+    Attractions.new(input)
+  end 
 
   def self.scrape_city_summary
     @city = @city.downcase
@@ -66,6 +71,8 @@ class Scraper
             puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
             i += 1
           end 
+        puts "Please select an attraction from the list above."
+        select_attraction
   end 
   
   def self.scrape_attraction_details
