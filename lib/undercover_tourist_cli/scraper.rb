@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'pry'
 require 'colorize'
+require_relative "attractions"
 
 class Scraper 
   attr_accessor :city, :page, :attractions
@@ -44,7 +45,15 @@ class Scraper
   
   def self.select_attraction
     input = gets.strip.downcase
+    @attractions.select do |a|
+      if input == a.downcase 
+        puts input
+      else 
+        puts "Invalid entry. Please try again."
+      end 
+    end 
     Attractions.new(input)
+    
   end 
 
   def self.scrape_city_summary
