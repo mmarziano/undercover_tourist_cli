@@ -79,11 +79,15 @@ class Scraper
       end
     end 
     Attractions.new(@selected_attraction)
+    Scraper.scrape_attraction_details
   end
   
   
   def self.scrape_attraction_details
-    
+    @selected_attraction = @selected_attraction.split(/\W+/).join('-')
+    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/#{@selected_attraction}"))
+    @city_attractions[:rating] = @page.css(".row attraction-overview").first
+    puts @city_attractions[:rating]
   end 
   
   Scraper.city_selector
