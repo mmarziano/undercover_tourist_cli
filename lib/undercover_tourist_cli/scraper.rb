@@ -42,19 +42,6 @@ class Scraper
     end
     Scraper.scrape_city_summary
   end 
-  
-  def self.select_attraction
-    input = gets.strip.downcase
-    @attractions.select do |a|
-      if input == a.downcase 
-        puts input
-      else 
-        puts "Invalid entry. Please try again."
-      end 
-    end 
-    Attractions.new(input)
-    
-  end 
 
   def self.scrape_city_summary
     @city = @city.downcase
@@ -80,13 +67,24 @@ class Scraper
             puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
             i += 1
           end 
-        puts "Please select an attraction from the list above."
-        select_attraction
+        puts "Please select a number from the list above."
+        Scraper.select_attraction
   end 
+  
+  def self.select_attraction
+    input = gets.strip.to_i
+    @attractions.select.with_index do |val, index|
+      if input == index.to_i + 1
+        @selected_attraction = val
+      end
+    end 
+    Attractions.new(@selected_attraction)
+  end
+  
   
   def self.scrape_attraction_details
     
   end 
   
-  city_selector
+  Scraper.city_selector
 end 
