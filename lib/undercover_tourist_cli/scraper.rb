@@ -7,10 +7,10 @@ require_relative "attractions"
 class Scraper 
   attr_accessor :city, :page, :attractions
   
-  @base_path = "https://www.undercovertourist.com/"
+  @base_path = "https://www.undercovertourist.com"
   @city_attractions = {}
   @attractions = []
-  
+  @attraction_urls = []
   
   def self.parse_page
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
@@ -58,6 +58,8 @@ class Scraper
       node.each do |node|
        @attractions << node.text
       end
+    
+      
     @city_attractions[:attractions] = @attractions
         puts "-------------------------------"
         puts "Below is a list of attractions:"
@@ -78,16 +80,40 @@ class Scraper
         @selected_attraction = val
       end
     end 
+    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
+    node = @page.css('.tile')
+    node.each do |node|
+       url = node.children.css('a').attribute('href')
+       attraction_url = @base_path + "#{url}"
+       @attraction_urls << attraction_url
+      end 
+    @attractions_urls.select.with_index do |val, index|
+      if input == index.to_i + 1
+        @selected_attraction_url = val
+      end
+    end
+    puts @selected_attraction_url
     Attractions.new(@selected_attraction)
-    Scraper.scrape_attraction_details
+    #Scraper.scrape_attraction_details
   end
   
   
   def self.scrape_attraction_details
-    @selected_attraction = @selected_attraction.split(/\W+/).join('-')
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/#{@selected_attraction}"))
-    @city_attractions[:rating] = @page.css(".row attraction-overview").first
-    puts @city_attractions[:rating]
+    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
+    node = @page.css('.tile')
+    node.each do |node|
+       url = node.children.css('a').attribute('href')
+       attraction_url = @base_path + "#{url}"
+       @attraction_urls << attraction_url
+      end 
+    @attractions_urls.select.with_index do |val, index|
+      if input == index.to_i + 1
+        @selected_attraction_url = val
+      end
+    end
+    puts @selected_attraction_url
+    #@city_attractions[:rating] = @page.css(".darkblue uppercase").first
+    #puts @city_attractions[:rating]
   end 
   
   Scraper.city_selector
