@@ -87,32 +87,21 @@ class Scraper
        attraction_url = @base_path + "#{url}"
        @attraction_urls << attraction_url
       end 
-    @attractions_urls.select.with_index do |val, index|
+    @attraction_urls.select.with_index do |val, index|
       if input == index.to_i + 1
         @selected_attraction_url = val
       end
     end
-    puts @selected_attraction_url
     Attractions.new(@selected_attraction)
-    #Scraper.scrape_attraction_details
+    Scraper.scrape_attraction_details
   end
   
   
   def self.scrape_attraction_details
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
-    node = @page.css('.tile')
-    node.each do |node|
-       url = node.children.css('a').attribute('href')
-       attraction_url = @base_path + "#{url}"
-       @attraction_urls << attraction_url
-      end 
-    @attractions_urls.select.with_index do |val, index|
-      if input == index.to_i + 1
-        @selected_attraction_url = val
-      end
-    end
-    puts @selected_attraction_url
-    #@city_attractions[:rating] = @page.css(".darkblue uppercase").first
+    @page = Nokogiri::HTML(open(@selected_attraction_url))
+    node = @page.css('.darkblue').children.css('.reviewpads')
+    puts node
+    #@city_attractions[:rating] = @page.css(".darkblue").inner_text
     #puts @city_attractions[:rating]
   end 
   
