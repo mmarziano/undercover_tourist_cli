@@ -99,13 +99,14 @@ class Scraper
   
   def self.scrape_attraction_details
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-    if @page.css('.reviewpads') != nil
+    node1 = @page.css('.reviewpads')
+    if node1.empty?
+      @city_attractions[:rating] = "N/A"
+        puts "Attraction Rating Unavailable"
+    else
      node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
      @city_attractions[:rating] = node[0].capitalize
       puts "Attraction Rating: #{@city_attractions[:rating]}" + " Stars"
-    else 
-        @city_attractions[:rating] = "N/A"
-        puts "Attraction Rating Unavailable"
     end 
     
   end 
