@@ -99,7 +99,7 @@ class Scraper
   
   def self.scrape_attraction_details
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-    node = @page.css('.reviewpads').children.css('span').attribute('class').value
+    node = @page.css('.reviewpads').attribute('class').value
    #node.each do |node|
       #node.inspect
     puts node
