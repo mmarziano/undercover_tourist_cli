@@ -92,19 +92,32 @@ class Scraper
         @selected_attraction_url = val
       end
     end
+     @page = Nokogiri::HTML(open(@selected_attraction_url))
+      node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
+          node.map do |node|
+            node.to_s.capitalize
+          end
+      node.select.with_index do |val, index|
+        if input == index.to_i + 1
+          @attraction_rating = val
+        end
+      end 
+      @city_attractions[:rating] = @attraction_rating
+      puts "Attraction Rating: #{@attraction_rating} + Stars"
+      
     Attractions.new(@selected_attraction)
-    Scraper.scrape_attraction_details
+    #Scraper.scrape_attraction_details
   end
   
   
   def self.scrape_attraction_details
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-    node = @page.css('.reviewpads').attribute('class').value
-   #node.each do |node|
-      #node.inspect
-    puts node
-    #@city_attractions[:rating] = @page.css(".darkblue").inner_text
-    #puts @city_attractions[:rating]
+    node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
+        node.map do |node|
+          node.to_s.capitalize
+        end
+    @city_attractions[:rating] = node.capitalize
+    puts "Attraction Rating: #{@city_attractions[:rating]} + Stars"
   end 
   
   Scraper.city_selector
