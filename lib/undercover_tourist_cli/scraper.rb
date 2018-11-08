@@ -99,7 +99,9 @@ class Scraper
   
   def self.scrape_attraction_details
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-    node = @page.css('.darkblue').children.css('.reviewpads')
+    node = @page.css('.reviewpads')
+    node.each do |node|
+      node.inspect
     puts node
     #@city_attractions[:rating] = @page.css(".darkblue").inner_text
     #puts @city_attractions[:rating]
