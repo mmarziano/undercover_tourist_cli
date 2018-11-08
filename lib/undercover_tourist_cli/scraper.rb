@@ -113,9 +113,9 @@ class Scraper
   def self.scrape_attraction_details
     @page = Nokogiri::HTML(open(@selected_attraction_url))
     node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
-        node.map do |node|
-          node.to_s.capitalize
-        end
+        #node.map do |node|
+          #node.to_s.capitalize
+        #end
     @city_attractions[:rating] = node.capitalize
     puts "Attraction Rating: #{@city_attractions[:rating]} + Stars"
   end 
