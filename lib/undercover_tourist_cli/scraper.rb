@@ -96,7 +96,8 @@ class Scraper
     #Scraper.scrape_attraction_rating
     #Scraper.scrape_attraction_crowdrating
     #Scraper.scrape_attraction_description
-    Scraper.scrape_attraction_hours
+    #Scraper.scrape_attraction_hours
+    Scraper.scrape_priority_attractions
   end
   
   
@@ -135,6 +136,14 @@ class Scraper
      @city_attractions[:hours] = hours
       puts "Today's Park Hours: #{@city_attractions[:hours]}"
   end 
+  
+  def self.scrape_priority_attractions
+    @page = Nokogiri::HTML(open(@selected_attraction_url))
+     node = @page.css('.top-attractions')
+     puts node
+     #@city_attractions[:hours] = hours
+      #puts "Today's Park Hours: #{@city_attractions[:hours]}"
+  end
   
   Scraper.city_selector
 end 
