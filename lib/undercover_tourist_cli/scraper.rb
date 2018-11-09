@@ -95,6 +95,7 @@ class Scraper
     Attractions.new(@selected_attraction)
     Scraper.scrape_attraction_rating
     Scraper.scrape_attraction_crowdrating
+    Scraper.scrape_attraction_description
   end
   
   
@@ -111,6 +112,14 @@ class Scraper
     end 
     
   end 
+  
+  def self.scrape_attraction_description
+    @page = Nokogiri::HTML(open(@selected_attraction_url))
+     node = @page.css('.about-attraction').children.css('p').text
+     @city_attractions[:description] = node
+      puts node
+
+  end
   
   def self.scrape_attraction_crowdrating
     @page = Nokogiri::HTML(open(@selected_attraction_url))
