@@ -93,11 +93,12 @@ class Scraper
       end
     end
     Attractions.new(@selected_attraction)
-    Scraper.scrape_attraction_details
+    Scraper.scrape_attraction_rating
+    Scraper.scrape_attraction_crowdrating
   end
   
   
-  def self.scrape_attraction_details
+  def self.scrape_attraction_rating
     @page = Nokogiri::HTML(open(@selected_attraction_url))
     node1 = @page.css('.reviewpads')
     if node1.empty?
@@ -109,6 +110,14 @@ class Scraper
       puts "Attraction Rating: #{@city_attractions[:rating]}" + " Stars"
     end 
     
+  end 
+  
+  def self.scrape_attraction_crowdrating
+    @page = Nokogiri::HTML(open(@selected_attraction_url))
+     node = @page.css('.daydetail')
+     @city_attractions[:current_crowd_rating] = node.value
+      puts "Current Crowd Rating (Scale 1-10): #{@city_attractions[:current_crowd_rating]}"
+
   end 
   
   Scraper.city_selector
