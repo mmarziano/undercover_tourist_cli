@@ -115,8 +115,9 @@ class Scraper
   def self.scrape_attraction_crowdrating
     @page = Nokogiri::HTML(open(@selected_attraction_url))
      node = @page.css('.daydetail')
-     @city_attractions[:current_crowd_rating] = node.value
-      puts "Current Crowd Rating (Scale 1-10): #{@city_attractions[:current_crowd_rating]}"
+     puts node
+     #@city_attractions[:current_crowd_rating] = node.value
+      #puts "Current Crowd Rating (Scale 1-10): #{@city_attractions[:current_crowd_rating]}"
 
   end 
   
