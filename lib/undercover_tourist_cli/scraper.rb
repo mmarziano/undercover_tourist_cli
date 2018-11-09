@@ -138,9 +138,13 @@ class Scraper
   end 
   
   def self.scrape_priority_attractions
+    @priority_attractions = []
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-     node = @page.css('.top-attractions')
-     puts node
+     node = @page.css('.fff-attractions')
+     node.each do |node|
+       @priority_attractions << node.children.css('li').children.css('a').text.strip
+     end
+     puts @priority_attractions
      #@city_attractions[:hours] = hours
       #puts "Today's Park Hours: #{@city_attractions[:hours]}"
   end
