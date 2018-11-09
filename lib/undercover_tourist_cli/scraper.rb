@@ -110,7 +110,6 @@ class Scraper
      @city_attractions[:rating] = node[0].capitalize
       puts "Attraction Rating: #{@city_attractions[:rating]}" + " Stars"
     end 
-    
   end 
   
   def self.scrape_attraction_description
@@ -118,7 +117,6 @@ class Scraper
      node = @page.css('.about-attraction').children.css('p').text
      @city_attractions[:description] = node
       puts node
-
   end
   
   def self.scrape_attraction_crowdrating
@@ -126,7 +124,6 @@ class Scraper
      node = @page.css('.daydetail').first.text
      @city_attractions[:current_crowd_rating] = node
       puts "Current Crowd Rating (Scale 1-10): #{@city_attractions[:current_crowd_rating]}"
-
   end 
   
   Scraper.city_selector
