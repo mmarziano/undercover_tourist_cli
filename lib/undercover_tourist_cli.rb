@@ -1,6 +1,9 @@
-require "undercover_tourist_cli/version"
-require "undercover_tourist_cli/scraper"
+#require_relative "../undercover_tourist_cli/version"
+require_relative "undercover_tourist_cli/scraper"
 
-module UndercoverTouristCli
-  # Your code goes here...
+module UndercoverTouristCli::Scraper
+  def start
+    Scraper.city_selector
+  end
+    
 end
