@@ -121,7 +121,7 @@ class Scraper
       @city_attractions[:description] = "N/A"
     else
      @city_attractions[:description] = node
-      puts node
+      puts "Description: ".colorize(:red) + "#{@city_attractions[:description]}"
     end
   end
   
