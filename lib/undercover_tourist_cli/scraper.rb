@@ -106,7 +106,7 @@ class Scraper
     node1 = @page.css('.reviewpads')
     if node1.empty?
       @city_attractions[:rating] = "N/A"
-        puts "Attraction Rating Unavailable"
+        puts "Attraction Rating Unavailable".colorize(:orange)
     else
      node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
      @city_attractions[:rating] = node[0].capitalize
