@@ -134,9 +134,9 @@ class Scraper
   
   def self.scrape_attraction_hours
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-     node = @page.css('.caltime')[0].text.strip
-     node1 = @page.css('.caltime')[1].text.strip
-     if node.empty? || node1.empty?
+     node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
+     node1 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
+     if node.nil?
        @city_attractions[:hours] = "N/A"
      else 
        hours = "#{node} " + "/ #{node1}"
