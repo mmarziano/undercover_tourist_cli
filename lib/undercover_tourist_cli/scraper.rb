@@ -93,10 +93,10 @@ class Scraper
       end
     end
     Attractions.new(@selected_attraction)
-    #Scraper.scrape_attraction_rating
-    #Scraper.scrape_attraction_crowdrating
-    #Scraper.scrape_attraction_description
-    #Scraper.scrape_attraction_hours
+    Scraper.scrape_attraction_rating
+    Scraper.scrape_attraction_crowdrating
+    Scraper.scrape_attraction_description
+    Scraper.scrape_attraction_hours
     Scraper.scrape_priority_attractions
   end
   
