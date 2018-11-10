@@ -163,6 +163,14 @@ class Scraper
           print "#{attr}, "
       end
     end
+    Scraper.create_attraction
+  end
+
+  def create_attraction
+    @city_attractions.each do |val|
+      city_summary = val
+    @city_summary = Attraction(city_summary)
+    puts Attraction(city_summary)
   end
 
 end 
