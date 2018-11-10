@@ -135,34 +135,40 @@ class Scraper
   def self.scrape_attraction_hours
     @page = Nokogiri::HTML(open(@selected_attraction_url))
     node2 = @page.css('.calattraction').attribute('data-filter-ids').value
-    if node2.include?('None')
-      @city_attractions[:hours] = "N/A"
-      puts "N/A"
-    else 
-     node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
-     node1 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
-       if node.nil?
-         @city_attractions[:hours] = "N/A"
-       else 
-         hours = "#{node} " + "/ #{node1}"
-         @city_attractions[:hours] = hours
-          puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
-        end
-    end  
+      if node2.include?('None')
+        @city_attractions[:hours] = "N/A"
+        puts "Hours:".colorize(:red) + " Unavailable"
+      else 
+        node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
+        if node.include?('EMH')
+          node1 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
+             hours = "#{node} " + "/ #{node1}"
+             @city_attractions[:hours] = hours
+             puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
+        else 
+            hours = "#{node}" 
+             @city_attractions[:hours] = hours
+             puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
+        end 
+      end  
   end 
   
   def self.scrape_priority_attractions
     @priority_attractions = []
     @page = Nokogiri::HTML(open(@selected_attraction_url))
      node = @page.css('.fff-attractions').children.css('li').children.css('a')
-     node.each do |node|
-       @priority_attractions << node.text
-     end
-     @city_attractions[:priority_attractions] = @priority_attractions
-        puts "Make Time For:".colorize(:red)
-     @city_attractions[:priority_attractions].each do |attr|
-        print "#{attr}, "
+       node.each do |node|
+         @priority_attractions << node.text
        end
+     if @priority_attractions.empty?
+       return nil
+     else 
+       @city_attractions[:priority_attractions] = @priority_attractions
+          puts "Make Time For:".colorize(:red)
+       @city_attractions[:priority_attractions].each do |attr|
+          print "#{attr}, "
+      end
+    end
   end
   
   Scraper.city_selector
