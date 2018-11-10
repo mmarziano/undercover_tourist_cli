@@ -166,11 +166,12 @@ class Scraper
     Scraper.create_attraction
   end
 
-  def create_attraction
+  def self.create_attraction
     @city_attractions.each do |val|
       city_summary = val
-    @city_summary = Attraction(city_summary)
-    puts Attraction(city_summary)
+      @city_summary = Attractions.new(city_summary)
+      puts @city_summary
+    end
   end
 
 end 
