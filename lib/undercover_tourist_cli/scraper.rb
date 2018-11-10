@@ -134,15 +134,21 @@ class Scraper
   
   def self.scrape_attraction_hours
     @page = Nokogiri::HTML(open(@selected_attraction_url))
+    node2 = @page.css('.calattraction').attribute('data-filter-ids').value
+    if node2.include?('None')
+      @city_attractions[:hours] = "N/A"
+      puts "N/A"
+    else 
      node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
      node1 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
-     if node.nil?
-       @city_attractions[:hours] = "N/A"
-     else 
-       hours = "#{node} " + "/ #{node1}"
-       @city_attractions[:hours] = hours
-        puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
-      end
+       if node.nil?
+         @city_attractions[:hours] = "N/A"
+       else 
+         hours = "#{node} " + "/ #{node1}"
+         @city_attractions[:hours] = hours
+          puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
+        end
+    end  
   end 
   
   def self.scrape_priority_attractions
