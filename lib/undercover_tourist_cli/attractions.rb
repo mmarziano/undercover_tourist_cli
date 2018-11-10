@@ -5,7 +5,7 @@ class Attractions
   
   def initialize(name)
     @name = name
-    puts "You have selected #{@name}."   
+    puts "You have selected #{@name}. #{@city_attractions[:city_summary]}"   
     
   end 
   

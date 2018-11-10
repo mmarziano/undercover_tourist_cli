@@ -4,6 +4,7 @@ require 'pry'
 require 'colorize'
 require_relative "attractions"
 
+
 class Scraper 
   attr_accessor :city, :page, :attractions
   
@@ -18,10 +19,6 @@ class Scraper
   end
   
   def self.city_selector
-    puts "---------------------------------"
-    puts "Welcome to the Undercover Tourist"
-    puts "---------------------------------"
-    puts "What city would you like to explore? Type 1 for" + " Orlando".colorize(:green) +", 2 for " + "Los Angeles".colorize(:yellow)+ ", 3 for " + "San Diego".colorize(:blue)+ ", or" + " Exit".colorize(:red) + " to exit."
     input = gets.strip.downcase
     case input 
     when input = "1"
@@ -47,7 +44,6 @@ class Scraper
     @city = @city.downcase
     Scraper.parse_page
     @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
-    puts @city_attractions
     Scraper.scrape_city_attractions
   end 
   
@@ -58,8 +54,6 @@ class Scraper
       node.each do |node|
        @attractions << node.text
       end
-    
-      
     @city_attractions[:attractions] = @attractions
         puts "-------------------------------"
         puts "Below is a list of attractions:"
@@ -170,6 +164,5 @@ class Scraper
       end
     end
   end
-  
-  Scraper.city_selector
+
 end 
