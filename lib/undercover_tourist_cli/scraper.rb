@@ -110,31 +110,39 @@ class Scraper
     else
      node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
      @city_attractions[:rating] = node[0].capitalize
-      puts "Attraction Rating: #{@city_attractions[:rating]}" + " Stars"
+      puts "Attraction Rating:".colorize(:red) + " #{@city_attractions[:rating]}" + " Stars"
     end 
   end 
   
   def self.scrape_attraction_description
     @page = Nokogiri::HTML(open(@selected_attraction_url))
      node = @page.css('.about-attraction').children.css('p').text
+    if node.empty?
+      @city_attractions[:description] = "N/A"
+    else
      @city_attractions[:description] = node
       puts node
+    end
   end
   
   def self.scrape_attraction_crowdrating
     @page = Nokogiri::HTML(open(@selected_attraction_url))
      node = @page.css('.daydetail').first.text
      @city_attractions[:current_crowd_rating] = node
-      puts "Current Crowd Rating (Scale 1-10): #{@city_attractions[:current_crowd_rating]}"
+      puts "Current Crowd Rating (Scale 1-10):".colorize(:red) + " #{@city_attractions[:current_crowd_rating]}"
   end 
   
   def self.scrape_attraction_hours
     @page = Nokogiri::HTML(open(@selected_attraction_url))
      node = @page.css('.caltime')[0].text.strip
      node1 = @page.css('.caltime')[1].text.strip
-     hours = "#{node} " + "/ #{node1}"
-     @city_attractions[:hours] = hours
-      puts "Today's Park Hours: #{@city_attractions[:hours]}"
+     if node.empty? || node1.empty?
+       @city_attractions[:hours] = "N/A"
+     else 
+       hours = "#{node} " + "/ #{node1}"
+       @city_attractions[:hours] = hours
+        puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
+      end
   end 
   
   def self.scrape_priority_attractions
@@ -145,10 +153,10 @@ class Scraper
        @priority_attractions << node.text
      end
      @city_attractions[:priority_attractions] = @priority_attractions
-     puts "Make Time For:"
+        puts "Make Time For:".colorize(:red)
      @city_attractions[:priority_attractions].each do |attr|
-      puts "#{attr}"
-     end
+        print "#{attr}, "
+       end
   end
   
   Scraper.city_selector
