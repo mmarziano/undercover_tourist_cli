@@ -17,53 +17,21 @@ class Scraper
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
     return @page
   end
-  
-  def self.city_selector
-    input = gets.strip.downcase
-    case input 
-    when input = "1"
-      @city = "Orlando"
-      puts "You have selected #{@city}."
-    when input = "2" 
-      @city = "Los-Angeles"
-      puts "You have selected #{@city}."
-    when input = "3" 
-      @city = "San-Diego"
-      puts "You have selected #{@city}."
-    when input = "Exit".downcase
-      @city = nil
-      puts "Exiting."
-    else 
-      puts "Please try again."
-      Scraper.city_selector
-    end
-    Scraper.scrape_city_summary
-  end 
 
   def self.scrape_city_summary
-    @city = @city.downcase
     Scraper.parse_page
     @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
-    Scraper.scrape_city_attractions
+    #Scraper.scrape_city_attractions
   end 
   
   def self.scrape_city_attractions
-    @city = @city.downcase
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
     node = @page.css('.tile .tiletitle')
       node.each do |node|
        @attractions << node.text
       end
     @city_attractions[:attractions] = @attractions
-        puts "-------------------------------"
-        puts "Below is a list of attractions:"
-        puts "-------------------------------"
-        i = 1
-          @attractions.each do |attraction|
-            puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
-            i += 1
-          end 
-        puts "Please select a number from the list above."
+        
         Scraper.select_attraction
   end 
   
