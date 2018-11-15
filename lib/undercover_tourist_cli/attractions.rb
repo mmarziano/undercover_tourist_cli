@@ -28,4 +28,28 @@ class Attractions
     @@all << @name 
   end 
   
+  def self.rating=(rating)
+    @rating = rating
+  end 
+  
+  def self.rating
+    @rating
+  end
+  
+  def self.description=(description)
+    @description = description
+  end 
+  
+  def self.description
+    @description
+  end
+  
+  def self.current_crowd_rating=(rating)
+    @current_crowd_rating = rating
+  end 
+  
+  def self.current_crowd_rating
+    @current_crowd_rating
+  end
+  
 end 

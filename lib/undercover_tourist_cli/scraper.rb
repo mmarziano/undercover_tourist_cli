@@ -58,12 +58,11 @@ class Scraper
         @selected_attraction_url = val
       end
     end
-    Attractions.new(@selected_attraction)
     Scraper.scrape_attraction_rating
-    Scraper.scrape_attraction_crowdrating
-    Scraper.scrape_attraction_description
-    Scraper.scrape_attraction_hours
-    Scraper.scrape_priority_attractions
+    #Scraper.scrape_attraction_crowdrating
+    #Scraper.scrape_attraction_description
+    #Scraper.scrape_attraction_hours
+    #Scraper.scrape_priority_attractions
   end
   
   
@@ -72,12 +71,12 @@ class Scraper
     node1 = @page.css('.reviewpads')
     if node1.empty?
       @city_attractions[:rating] = "N/A"
-        puts "Attraction Rating Unavailable".colorize(:orange)
     else
-     node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
-     @city_attractions[:rating] = node[0].capitalize
-      puts "Attraction Rating:".colorize(:red) + " #{@city_attractions[:rating]}" + " Stars"
-    end 
+      node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
+      @city_attractions[:rating] = node[0].capitalize + " Stars"
+    end
+      Attractions.rating=(@city_attractions[:rating])
+      Scraper.scrape_attraction_description
   end 
   
   def self.scrape_attraction_description
@@ -87,7 +86,9 @@ class Scraper
       @city_attractions[:description] = "N/A"
     else
      @city_attractions[:description] = node
-      puts "Description: ".colorize(:red) + "#{@city_attractions[:description]}"
+      Attractions.description=(@city_attractions[:description])
+      puts Attractions.description
+      Scraper.scrape_attraction_crowdrating
     end
   end
   
@@ -95,7 +96,8 @@ class Scraper
     @page = Nokogiri::HTML(open(@selected_attraction_url))
      node = @page.css('.daydetail').first.text
      @city_attractions[:current_crowd_rating] = node
-      puts "Current Crowd Rating (Scale 1-10):".colorize(:red) + " #{@city_attractions[:current_crowd_rating]}"
+     Attractions.current_crowd_rating=(rating)
+     puts Attractions.current_crowd_rating
   end 
   
   def self.scrape_attraction_hours
