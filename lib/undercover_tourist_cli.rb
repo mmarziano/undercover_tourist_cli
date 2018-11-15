@@ -22,10 +22,7 @@ class UndercoverTouristCli
     when input = "orlando"
       Scraper.city(input)
       Scraper.scrape_city_summary
-      City.all
-      #@city = City.new().city
-     
-      #puts "You have selected #{@city}."
+      puts "You have selected #{City.name}. #{City.city_summary}"
     when input = "los angeles" 
       @city = City.new("Los-Angeles").city
       puts "You have selected #{@city}."

@@ -25,8 +25,7 @@ class Scraper
   def self.scrape_city_summary
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
     @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
-    City.new(@city, @city_attractions[:city_summary])
-    City.all
+    selected_city = City.new(@city, @city_attractions[:city_summary])
   end 
   
   def self.scrape_city_attractions

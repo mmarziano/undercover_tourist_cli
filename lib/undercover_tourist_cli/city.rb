@@ -1,24 +1,27 @@
 
 
 class City 
-  attr_accessor :city, :city_summary 
+  attr_accessor :name, :city_summary 
   
   @@all = []
   
-  def initialize(city = nil, city_summary = nil)
-    @city = city 
+  def initialize(name = nil, city_summary = nil)
+    @name = name 
     @city_summary = city_summary
     @@all << self
   end 
   
-  def self.city 
-    @city
+  def self.name 
+    @name
+  end 
+  
+  def self.city_summary
+    @city_summary
   end 
   
   def self.all 
     puts @@all 
   end 
-  
-  binding.pry
+
 end 
     
