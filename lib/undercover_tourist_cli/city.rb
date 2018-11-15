@@ -19,6 +19,6 @@ class City
     puts @@all 
   end 
   
-  
+  binding.pry
 end 
     
