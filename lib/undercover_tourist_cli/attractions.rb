@@ -1,7 +1,7 @@
 
 
 class Attractions 
-  attr_accessor :name, :description, :rating, :current_crowd_rating, :priority_attractions, :selected_attraction, :city_summary, :hours
+  attr_accessor :name, :description, :rating, :current_crowd_rating, :priority_attractions, :selected_attraction, :hours
   
   @@all = []
   
@@ -50,6 +50,22 @@ class Attractions
   
   def self.current_crowd_rating
     @current_crowd_rating
+  end
+  
+  def self.hours=(hours)
+    @hours = hours
+  end 
+  
+  def self.hours
+    @hours
+  end
+  
+  def self.priority_attractions=(attractions)
+    @priority_attractions = attractions
+  end 
+  
+  def self.priority_attractions
+    @priority_attractions
   end
   
 end 

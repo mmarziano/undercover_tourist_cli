@@ -87,7 +87,6 @@ class Scraper
     else
      @city_attractions[:description] = node
       Attractions.description=(@city_attractions[:description])
-      puts Attractions.description
       Scraper.scrape_attraction_crowdrating
     end
   end
@@ -96,8 +95,8 @@ class Scraper
     @page = Nokogiri::HTML(open(@selected_attraction_url))
      node = @page.css('.daydetail').first.text
      @city_attractions[:current_crowd_rating] = node
-     Attractions.current_crowd_rating=(rating)
-     puts Attractions.current_crowd_rating
+     Attractions.current_crowd_rating=(@city_attractions[:current_crowd_rating])
+     Scraper.scrape_attraction_hours
   end 
   
   def self.scrape_attraction_hours
@@ -105,19 +104,18 @@ class Scraper
     node2 = @page.css('.calattraction').attribute('data-filter-ids').value
       if node2.include?('None')
         @city_attractions[:hours] = "N/A"
-        puts "Hours:".colorize(:red) + " Unavailable"
       else 
         node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
         if node.include?('EMH')
           node1 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
              hours = "#{node} " + "/ #{node1}"
              @city_attractions[:hours] = hours
-             puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
         else 
             hours = "#{node}" 
              @city_attractions[:hours] = hours
-             puts "Today's Park Hours:".colorize(:red)  +" #{@city_attractions[:hours]}"
         end 
+        Attractions.hours=(@city_attractions[:hours])
+        Scraper.scrape_priority_attractions
       end  
   end 
   
@@ -132,19 +130,7 @@ class Scraper
        return nil
      else 
        @city_attractions[:priority_attractions] = @priority_attractions
-          puts "Make Time For:".colorize(:red)
-       @city_attractions[:priority_attractions].each do |attr|
-          print "#{attr}, "
-      end
-    end
-    Scraper.create_attraction
-  end
-
-  def self.create_attraction
-    @city_attractions.each do |val|
-      city_summary = val
-      @city_summary = Attractions.new(city_summary)
-      puts @city_summary
+       Attractions.priority_attractions=(@city_attractions[:priority_attractions])
     end
   end
 
