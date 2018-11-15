@@ -14,6 +14,7 @@ class Scraper
   @attraction_urls = []
   
   def self.parse_page
+    binding.pry
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
     return @page
   end
