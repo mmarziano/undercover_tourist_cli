@@ -36,8 +36,8 @@ class UndercoverTouristCli
     puts "-------------------------------"
     Scraper.scrape_city_attractions
           i = 1
-          @attractions.each do |attraction|
-            puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
+          Attractions.all.each do |attraction|
+            puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
             i += 1
           end 
         puts "Please select a number from the list above."

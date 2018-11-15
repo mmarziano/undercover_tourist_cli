@@ -33,8 +33,10 @@ class Scraper
     node = @page.css('.tile .tiletitle')
       node.each do |node|
        @attractions << node.text
+       Attractions.new(node.text)
       end
     @city_attractions[:attractions] = @attractions
+    Attractions.all
   end 
   
   def self.select_attraction

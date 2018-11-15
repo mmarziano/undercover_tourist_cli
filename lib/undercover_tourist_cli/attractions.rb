@@ -5,7 +5,7 @@ class Attractions
   
   @@all = []
   
-  def initialize(name = nil, description = nil, rating = nil, current_crowd_rating = nil, priority_attractions = nil, selected_attraction = nil, hours = nil)
+  def initialize(name = nil, description = nil, rating = nil, current_crowd_rating = nil, priority_attractions = nil, selected_attractions = nil, hours = nil)
     @name = name
     @description = description
     @rating = rating
@@ -14,11 +14,9 @@ class Attractions
     @selected_attractions = selected_attractions
     @hours = hours
     @@all << self
-    
-    puts "You have selected #{@name}."   
   end 
   
-  def attractions 
+  def self.all
     @@all 
   end 
   
