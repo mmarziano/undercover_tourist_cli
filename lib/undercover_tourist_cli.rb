@@ -20,9 +20,12 @@ class UndercoverTouristCli
     input = gets.strip.downcase
     case input 
     when input = "orlando"
-      @city = City.new("Orlando").city
-      Scraper.city(@city)
-      puts "You have selected #{@city}."
+      Scraper.city(input)
+      Scraper.scrape_city_summary
+      City.all
+      #@city = City.new().city
+     
+      #puts "You have selected #{@city}."
     when input = "los angeles" 
       @city = City.new("Los-Angeles").city
       puts "You have selected #{@city}."
@@ -36,12 +39,12 @@ class UndercoverTouristCli
       puts "Entry not recognized. Please try again."
       city_selector
    end 
-   Scraper.scrape_city_summary
-   Scraper.scrape_city_attractions
-   pick_attraction
+   #Scraper.scrape_city_summary
+   #Scraper.scrape_city_attractions
+   #UndercoverTouristCli.pick_attraction
   end 
   
-  def pick_attraction
+  def self.pick_attraction
     puts "-------------------------------"
     puts "Below is a list of attractions:"
     puts "-------------------------------"

@@ -1,15 +1,24 @@
-#require_relative "../undercover_tourist_cli"
+
 
 class City 
-  attr_accessor :city 
+  attr_accessor :city, :city_summary 
   
-  def initialize(city)
+  @@all = []
+  
+  def initialize(city = nil, city_summary = nil)
     @city = city 
+    @city_summary = city_summary
+    @@all << self
   end 
   
   def self.city 
     @city
   end 
+  
+  def self.all 
+    puts @@all 
+  end 
+  
   
 end 
     
