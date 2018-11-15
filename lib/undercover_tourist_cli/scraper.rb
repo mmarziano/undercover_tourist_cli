@@ -13,8 +13,11 @@ class Scraper
   @attractions = []
   @attraction_urls = []
   
+  def self.city(city)
+    @city = city.downcase
+  end 
+
   def self.parse_page
-    binding.pry
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
     return @page
   end
@@ -22,7 +25,7 @@ class Scraper
   def self.scrape_city_summary
     Scraper.parse_page
     @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
-    #Scraper.scrape_city_attractions
+    Scraper.scrape_city_attractions
   end 
   
   def self.scrape_city_attractions

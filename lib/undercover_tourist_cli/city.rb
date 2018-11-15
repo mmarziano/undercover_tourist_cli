@@ -7,7 +7,7 @@ class City
     @city = city 
   end 
   
-  def city 
+  def self.city 
     @city
   end 
   

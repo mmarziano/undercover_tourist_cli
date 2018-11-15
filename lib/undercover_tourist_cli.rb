@@ -21,6 +21,7 @@ class UndercoverTouristCli
     case input 
     when input = "orlando"
       @city = City.new("Orlando").city
+      Scraper.city(@city)
       puts "You have selected #{@city}."
     when input = "los angeles" 
       @city = City.new("Los-Angeles").city
