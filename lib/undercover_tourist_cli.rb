@@ -4,6 +4,7 @@ require 'pry'
 require 'colorize'
 #require_relative "../undercover_tourist_cli/version"
 require_relative "undercover_tourist_cli/scraper"
+require_relative "undercover_tourist_cli/city"
 
 class UndercoverTouristCli
 
@@ -19,13 +20,13 @@ class UndercoverTouristCli
     input = gets.strip.downcase
     case input 
     when input = "orlando"
-      @city = "Orlando"
+      @city = City.new("Orlando").city
       puts "You have selected #{@city}."
     when input = "los angeles" 
-      @city = "Los-Angeles"
+      @city = City.new("Los-Angeles").city
       puts "You have selected #{@city}."
     when input = "san diego" 
-      @city = "San-Diego"
+      @city = City.new("San-Diego").city
       puts "You have selected #{@city}."
     when input = "Exit".downcase
       @city = nil
