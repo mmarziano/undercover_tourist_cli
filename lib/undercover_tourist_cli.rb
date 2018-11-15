@@ -21,7 +21,6 @@ class UndercoverTouristCli
     if input == "orlando" || input == "los-angeles" || input == "san-diego"
       Scraper.city(input)
       Scraper.scrape_city_summary
-      Scraper.scrape_city_attractions
       UndercoverTouristCli.pick_attraction
     elsif input == "exit"
       puts "Exiting."
@@ -35,6 +34,7 @@ class UndercoverTouristCli
     puts "-------------------------------"
     puts "Below is a list of attractions:"
     puts "-------------------------------"
+    Scraper.scrape_city_attractions
           i = 1
           @attractions.each do |attraction|
             puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
