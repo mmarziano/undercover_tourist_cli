@@ -1,3 +1,4 @@
+
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
@@ -55,9 +56,12 @@ class UndercoverTouristCli
     puts "Attraction Name: " + Attractions.name 
     puts "Attraction Description: " + Attractions.description
     puts "Attraction Rating: " + Attractions.rating 
-    puts "Attraction Crowd Size (Scale 1-10): " + Attractions.current_crowd_rating
-    puts "Attraction Hours: " + Attractions.hours 
-    puts "Make Time For: " + Attractions.priority_attractions
+    puts "Today's Attraction Crowd Size (Scale 1-10): " + Attractions.current_crowd_rating
+    puts "Today's Attraction Hours: " + Attractions.hours 
+    puts "Be sure to check out: " 
+      Attractions.priority_attractions.each do |attraction|
+        puts attraction
+      end 
   end 
   
   end
