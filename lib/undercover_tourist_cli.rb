@@ -27,9 +27,14 @@ class UndercoverTouristCli
       puts "Entry not recognized. Please check spelling and try again."
       city_selector
    end 
-    puts "Great choice! Here's some more information on " + Scraper.city.capitalize + 
-    ". " + City.city_summary
-    UndercoverTouristCli.pick_attraction
+    puts "Great choice! Here's some more information on " + Scraper.city.capitalize.colorize(:blue) + 
+    ". " + City.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
+    choice = gets.strip.downcase
+      if choice == "Y" || choice == "y"
+        UndercoverTouristCli.pick_attraction
+      else 
+        call
+      end
   end 
   
   def self.pick_attraction
