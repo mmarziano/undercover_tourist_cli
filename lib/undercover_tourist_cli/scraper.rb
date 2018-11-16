@@ -1,9 +1,4 @@
-require 'nokogiri'
-require 'open-uri'
-require 'pry'
-require 'colorize'
-require_relative "attractions"
-require_relative "city"
+
 
 class Scraper 
   attr_accessor :city, :page, :attractions

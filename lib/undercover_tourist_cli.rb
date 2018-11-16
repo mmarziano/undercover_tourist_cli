@@ -1,13 +1,9 @@
 
-require 'nokogiri'
-require 'open-uri'
-require 'pry'
-require 'colorize'
-#require_relative "../undercover_tourist_cli/version"
-require_relative "undercover_tourist_cli/scraper"
-require_relative "undercover_tourist_cli/city"
 
-class UndercoverTouristCli
+module UndercoverTouristCli
+end
+
+class Cli
 
   def call
     puts "---------------------------------"
@@ -78,4 +74,4 @@ class UndercoverTouristCli
   
   end
 
-UndercoverTouristCli.new.call
+UndercoverTouristCli::Cli.new.call
