@@ -27,7 +27,7 @@ class UndercoverTouristCli
       UndercoverTouristCli.choice
     elsif input == "exit"
       puts "Exiting."
-      UndercoverTouristCli.new.call
+      exit
     else 
       puts "Entry not recognized. Please check spelling and try again."
       city_selector
