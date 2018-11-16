@@ -137,7 +137,7 @@ class Scraper
          @city_attractions[:priority_attractions] = @priority_attractions
        end
       Attractions.priority_attractions=(@city_attractions[:priority_attractions])
-      UndercoverTouristCli.results
+      UndercoverTouristCli::Cli.results
   end
   
   

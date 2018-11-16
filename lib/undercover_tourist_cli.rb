@@ -1,10 +1,9 @@
 
 
 module UndercoverTouristCli
-end
 
-class Cli
-
+class Cli 
+  
   def call
     puts "---------------------------------"
     puts "Welcome to the Undercover Tourist"
@@ -20,7 +19,7 @@ class Cli
       Scraper.scrape_city_summary
       puts "Great choice! Here's some more information on " + Scraper.city.capitalize.colorize(:blue) + 
     ". " + City.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
-      UndercoverTouristCli.choice
+      UndercoverTouristCli::Cli.choice
     elsif input == "exit"
       puts "Exiting."
       exit
@@ -34,9 +33,9 @@ class Cli
   def self.choice
     choice = gets.strip.downcase
       if choice == "Y" || choice == "y"
-        UndercoverTouristCli.pick_attraction
+        UndercoverTouristCli::Cli.pick_attraction
       else 
-        UndercoverTouristCli.new.call
+        UndercoverTouristCli::Cli.new.call
       end
   end 
   
@@ -54,24 +53,24 @@ class Cli
         Scraper.select_attraction
   end 
   
-  def self.results
-    puts "Attraction Name: ".colorize(:red) + Attractions.name 
-    puts "Attraction Description: ".colorize(:red) + Attractions.description
-    puts "Attraction Rating: ".colorize(:red) + Attractions.rating 
-    puts "Today's Attraction Crowd Size (Scale 1-10): ".colorize(:red) + Attractions.current_crowd_rating
-    puts "Today's Attraction Hours: ".colorize(:red) + Attractions.hours 
-    puts "Be sure to check out: ".colorize(:red) 
-      if Attractions.priority_attractions == "N/A"
-        puts "N/A"
-      else 
-        Attractions.priority_attractions.each do |attraction|
-          puts attraction
-        end 
-      end
-    puts "Would you like to check out another attraction? (Y/N)"
-    UndercoverTouristCli.choice
-  end 
-  
+    def self.results
+      puts "Attraction Name: ".colorize(:red) + Attractions.name 
+      puts "Attraction Description: ".colorize(:red) + Attractions.description
+      puts "Attraction Rating: ".colorize(:red) + Attractions.rating 
+      puts "Today's Attraction Crowd Size (Scale 1-10): ".colorize(:red) + Attractions.current_crowd_rating
+      puts "Today's Attraction Hours: ".colorize(:red) + Attractions.hours 
+      puts "Be sure to check out: ".colorize(:red) 
+        if Attractions.priority_attractions == "N/A"
+          puts "N/A"
+        else 
+          Attractions.priority_attractions.each do |attraction|
+            puts attraction
+          end 
+        end
+      puts "Would you like to check out another attraction? (Y/N)"
+      UndercoverTouristCli::Cli.choice
+    end 
   end
+end
 
 UndercoverTouristCli::Cli.new.call
