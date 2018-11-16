@@ -53,12 +53,12 @@ class UndercoverTouristCli
   end 
   
   def self.results
-    puts "Attraction Name: " + Attractions.name 
-    puts "Attraction Description: " + Attractions.description
-    puts "Attraction Rating: " + Attractions.rating 
-    puts "Today's Attraction Crowd Size (Scale 1-10): " + Attractions.current_crowd_rating
-    puts "Today's Attraction Hours: " + Attractions.hours 
-    puts "Be sure to check out: " 
+    puts "Attraction Name: ".colorize(:red) + Attractions.name 
+    puts "Attraction Description: ".colorize(:red) + Attractions.description
+    puts "Attraction Rating: ".colorize(:red) + Attractions.rating 
+    puts "Today's Attraction Crowd Size (Scale 1-10): ".colorize(:red) + Attractions.current_crowd_rating
+    puts "Today's Attraction Hours: ".colorize(:red) + Attractions.hours 
+    puts "Be sure to check out: ".colorize(:red) 
       Attractions.priority_attractions.each do |attraction|
         puts attraction
       end 

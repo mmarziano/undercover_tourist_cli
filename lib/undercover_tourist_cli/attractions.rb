@@ -20,6 +20,10 @@ class Attractions
     @@all 
   end 
   
+  def self.name=(name)
+    @name = name
+  end 
+  
   def self.name 
     @name
   end 

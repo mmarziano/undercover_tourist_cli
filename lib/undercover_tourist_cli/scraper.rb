@@ -63,6 +63,7 @@ class Scraper
         @selected_attraction_url = val
       end
     end
+    Attractions.name=(@selected_attraction)
     Scraper.scrape_attraction_rating
   end
   
