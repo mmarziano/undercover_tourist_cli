@@ -53,6 +53,25 @@ class Cli
         Scraper.select_attraction
   end 
   
+  def self.pick_attraction_repeat
+    choice = gets.strip.downcase
+    if choice == "Y" || choice == "y"
+      puts "-------------------------------"
+      puts "Below is a list of attractions:"
+      puts "-------------------------------"
+            i = 1
+            Attractions.all.each do |attraction|
+              puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
+              i += 1
+            end 
+          puts "Please select a number from the list above."
+          Scraper.select_attraction
+    else 
+      puts "Happy travels!"
+      exit
+    end
+  end 
+  
     def self.results
       puts "Attraction Name: ".colorize(:red) + Attractions.name 
       puts "Attraction Description: ".colorize(:red) + Attractions.description
@@ -68,7 +87,7 @@ class Cli
           end 
         end
       puts "Would you like to check out another attraction? (Y/N)"
-      UndercoverTouristCli::Cli.choice
+      UndercoverTouristCli::Cli.pick_attraction_repeat
     end 
   end
 end
