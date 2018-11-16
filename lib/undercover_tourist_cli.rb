@@ -52,7 +52,12 @@ class UndercoverTouristCli
   end 
   
   def self.results
-    puts 
+    puts "Attraction Name: " + Attractions.name 
+    puts "Attraction Description: " + Attractions.description
+    puts "Attraction Rating: " + Attractions.rating 
+    puts "Attraction Crowd Size (Scale 1-10): " + Attractions.current_crowd_rating
+    puts "Attraction Hours: " + Attractions.hours 
+    puts "Make Time For: " + Attractions.priority_attractions
   end 
   
   end

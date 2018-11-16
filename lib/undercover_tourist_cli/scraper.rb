@@ -132,7 +132,9 @@ class Scraper
      else 
        @city_attractions[:priority_attractions] = @priority_attractions
        Attractions.priority_attractions=(@city_attractions[:priority_attractions])
+       UndercoverTouristCli.results
     end
   end
-
+  
+  
 end 
