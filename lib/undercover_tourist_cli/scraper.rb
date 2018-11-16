@@ -32,7 +32,7 @@ class Scraper
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
     node = @page.css('.tile .tiletitle')
       node.each do |node|
-       @attractions << node.text
+       @attractions << node.text unless node.text.include?("Attraction")
        Attractions.new(node.text)
       end
     @city_attractions[:attractions] = @attractions
