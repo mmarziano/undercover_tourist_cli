@@ -15,6 +15,10 @@ class City
     @name
   end 
   
+  def self.city_summary=(summary)
+    @city_summary = summary
+  end 
+  
   def self.city_summary
     @city_summary
   end 

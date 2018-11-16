@@ -27,9 +27,8 @@ class UndercoverTouristCli
       puts "Entry not recognized. Please check spelling and try again."
       city_selector
    end 
-   puts City.city_summary
     puts "Great choice! Here's some more information on " + Scraper.city.capitalize + 
-    "." + City.city_summary.to_s
+    ". " + City.city_summary
     UndercoverTouristCli.pick_attraction
   end 
   
