@@ -30,6 +30,10 @@ class UndercoverTouristCli
    end 
     puts "Great choice! Here's some more information on " + Scraper.city.capitalize.colorize(:blue) + 
     ". " + City.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
+    UndercoverTouristCli.choice
+  end 
+  
+  def self.choice
     choice = gets.strip.downcase
       if choice == "Y" || choice == "y"
         UndercoverTouristCli.pick_attraction
@@ -66,6 +70,8 @@ class UndercoverTouristCli
           puts attraction
         end 
       end
+    puts "Would you like to check out another attraction? (Y/N)"
+    UndercoverTouristCli.choice
   end 
   
   end
