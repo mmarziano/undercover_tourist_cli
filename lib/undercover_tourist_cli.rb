@@ -19,15 +19,18 @@ class UndercoverTouristCli
   def city_selector 
     input = gets.strip.downcase.split(' ').join('-')
     if input == "orlando" || input == "los-angeles" || input == "san-diego"
-      Scraper.city(input)
+      Scraper.city=(input)
       Scraper.scrape_city_summary
-      UndercoverTouristCli.pick_attraction
     elsif input == "exit"
       puts "Exiting."
     else 
       puts "Entry not recognized. Please check spelling and try again."
       city_selector
    end 
+   puts City.city_summary
+    puts "Great choice! Here's some more information on " + Scraper.city.capitalize + 
+    "." + City.city_summary.to_s
+    UndercoverTouristCli.pick_attraction
   end 
   
   def self.pick_attraction
@@ -44,6 +47,9 @@ class UndercoverTouristCli
         Scraper.select_attraction
   end 
   
+  def self.results
+    puts 
+  end 
   
   end
 
