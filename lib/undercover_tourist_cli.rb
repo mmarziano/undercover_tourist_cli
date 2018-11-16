@@ -22,15 +22,17 @@ class UndercoverTouristCli
     if input == "orlando" || input == "los-angeles" || input == "san-diego"
       Scraper.city=(input)
       Scraper.scrape_city_summary
+      puts "Great choice! Here's some more information on " + Scraper.city.capitalize.colorize(:blue) + 
+    ". " + City.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
+      UndercoverTouristCli.choice
     elsif input == "exit"
       puts "Exiting."
+      UndercoverTouristCli.new.call
     else 
       puts "Entry not recognized. Please check spelling and try again."
       city_selector
    end 
-    puts "Great choice! Here's some more information on " + Scraper.city.capitalize.colorize(:blue) + 
-    ". " + City.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
-    UndercoverTouristCli.choice
+    
   end 
   
   def self.choice
@@ -38,7 +40,7 @@ class UndercoverTouristCli
       if choice == "Y" || choice == "y"
         UndercoverTouristCli.pick_attraction
       else 
-        call
+        UndercoverTouristCli.new.call
       end
   end 
   
