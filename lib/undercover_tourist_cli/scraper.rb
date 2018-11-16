@@ -108,7 +108,7 @@ class Scraper
         @city_attractions[:hours] = "N/A"
       else 
         node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
-        if node.nil?
+        if node == nil
           @city_attractions[:hours] = "N/A"
         elsif node.include?('EMH')
           node1 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
