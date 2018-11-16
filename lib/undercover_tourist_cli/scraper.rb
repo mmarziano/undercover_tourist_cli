@@ -88,9 +88,9 @@ class Scraper
       @city_attractions[:description] = "N/A"
     else
      @city_attractions[:description] = node
-      Attractions.description=(@city_attractions[:description])
-      Scraper.scrape_attraction_crowdrating
     end
+    Attractions.description=(@city_attractions[:description])
+    Scraper.scrape_attraction_crowdrating
   end
   
   def self.scrape_attraction_crowdrating
@@ -106,6 +106,12 @@ class Scraper
     node2 = @page.css('.calattraction').attribute('data-filter-ids').value
       if node2.include?('None')
         @city_attractions[:hours] = "N/A"
+      elsif 
+        node = @page.css('calattraction .filterableitem').nil?
+          @city_attractions[:hours] = "N/A"
+      elsif 
+        node = @page.css('.calattraction .filterableitem .caltime')[0].nil?
+          @city_attractions[:hours] = "N/A"
       else 
         node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
         if node == nil
@@ -118,25 +124,25 @@ class Scraper
             hours = "#{node}" 
              @city_attractions[:hours] = hours
         end 
-        Attractions.hours=(@city_attractions[:hours])
-        Scraper.scrape_priority_attractions
       end  
+      Attractions.hours=(@city_attractions[:hours])
+      Scraper.scrape_priority_attractions
   end 
   
   def self.scrape_priority_attractions
     @priority_attractions = []
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-     node = @page.css('.fff-attractions').children.css('li').children.css('a')
-       node.each do |node|
-         @priority_attractions << node.text
-       end
+       node = @page.css('.fff-attractions').children.css('li').children.css('a')
+         node.each do |node|
+           @priority_attractions << node.text
+         end
      if @priority_attractions.empty?
-       return nil
-     else 
-       @city_attractions[:priority_attractions] = @priority_attractions
-       Attractions.priority_attractions=(@city_attractions[:priority_attractions])
-       UndercoverTouristCli.results
-    end
+         @city_attractions[:priority_attractions] = "N/A"
+       else 
+         @city_attractions[:priority_attractions] = @priority_attractions
+       end
+      Attractions.priority_attractions=(@city_attractions[:priority_attractions])
+      UndercoverTouristCli.results
   end
   
   

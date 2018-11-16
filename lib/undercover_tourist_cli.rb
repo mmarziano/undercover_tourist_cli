@@ -59,9 +59,13 @@ class UndercoverTouristCli
     puts "Today's Attraction Crowd Size (Scale 1-10): ".colorize(:red) + Attractions.current_crowd_rating
     puts "Today's Attraction Hours: ".colorize(:red) + Attractions.hours 
     puts "Be sure to check out: ".colorize(:red) 
-      Attractions.priority_attractions.each do |attraction|
-        puts attraction
-      end 
+      if Attractions.priority_attractions == "N/A"
+        puts "N/A"
+      else 
+        Attractions.priority_attractions.each do |attraction|
+          puts attraction
+        end 
+      end
   end 
   
   end
