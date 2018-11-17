@@ -53,8 +53,10 @@ class Scraper
     node = @page.css('.tile')
     node.each do |node|
        url = node.children.css('a').attribute('href')
-       attraction_url = @base_path + "#{url}"
-       @attraction_urls << attraction_url
+        if url != nil
+           attraction_url = @base_path + "#{url}"
+           @attraction_urls << attraction_url
+        end
       end 
     @attraction_urls.select.with_index do |val, index|
       if input == index.to_i + 1
