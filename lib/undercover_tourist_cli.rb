@@ -17,7 +17,7 @@ class Cli
     if input == "orlando" || input == "los-angeles" || input == "san-diego"
       Scraper.city=(input)
       Scraper.scrape_city_summary
-      puts "Great choice! Here's some more information on " + Scraper.city.capitalize.colorize(:blue) + 
+      puts "Great choice! Here's some more information on " + Scraper.city.split('-').join(' ').capitalize.colorize(:blue) + 
     ". " + City.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
       UndercoverTouristCli::Cli.choice
     elsif input == "exit"
