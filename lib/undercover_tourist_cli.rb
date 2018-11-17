@@ -65,7 +65,7 @@ class Cli
               i += 1
             end 
           puts "Please select a number from the list above."
-          Scraper.select_attraction
+          Scraper.select_another_attraction
     else 
       puts "Happy travels!"
       exit

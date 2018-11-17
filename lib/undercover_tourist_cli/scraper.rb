@@ -32,14 +32,40 @@ class Scraper
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
     node = @page.css('.tile .tiletitle')
       node.each do |node|
-       @attractions << node.text unless node.text.include?("Attraction")
-       Attractions.new(node.text)
+        if node.text != "Attraction"
+           @attractions << node.text 
+           Attractions.new(node.text)
+        end
       end
+      @attractions.delete("Attraction")
     @city_attractions[:attractions] = @attractions
-    Attractions.all
+
   end 
   
   def self.select_attraction
+    input = gets.strip.to_i 
+    @attractions.select.with_index do |val, index|
+      if input == index.to_i + 1
+        @selected_attraction = val
+      end
+    end 
+    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
+    node = @page.css('.tile')
+    node.each do |node|
+       url = node.children.css('a').attribute('href')
+       attraction_url = @base_path + "#{url}"
+       @attraction_urls << attraction_url
+      end 
+    @attraction_urls.select.with_index do |val, index|
+      if input == index.to_i + 1
+        @selected_attraction_url = val
+      end
+    end
+    Attractions.name=(@selected_attraction)
+    Scraper.scrape_attraction_rating
+  end
+  
+  def self.select_another_attraction
     input = gets.strip.to_i
     @attractions.select.with_index do |val, index|
       if input == index.to_i + 1
@@ -90,8 +116,12 @@ class Scraper
   
   def self.scrape_attraction_crowdrating
     @page = Nokogiri::HTML(open(@selected_attraction_url))
-     node = @page.css('.daydetail').first.text
-     @city_attractions[:current_crowd_rating] = node
+     node = @page.css('.daydetail')
+     if node.nil?
+       @city_attractions[:current_crowd_rating] = "N/A"
+     else
+       @city_attractions[:current_crowd_rating] = node.first.text
+     end
      Attractions.current_crowd_rating=(@city_attractions[:current_crowd_rating])
      Scraper.scrape_attraction_hours
   end 
