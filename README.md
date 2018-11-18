@@ -4,23 +4,17 @@ Welcome to Undercover Tourist CLI.  You can explore Disney and other theme park 
 
 ## Installation
 
-Add this line to your application's Gemfile:
+You can install this gem by typing the following prompt in terminal:
 
-```ruby
-gem 'undercover_tourist_cli'
-```
+gem install undercover_tourist_cli
 
-And then execute:
+The undercover_tourist_cli gem will be installed and you can run undercover_tourist to view city and attraction information for Orlando, Los Angeles, and San Diego.
 
-    $ bundle
 
-Or install it yourself as:
-
-    $ gem install undercover_tourist_cli
 
 ## Usage
 
-
+Run: undercover_tourist after installing the gem.
 
 ## Development
 
