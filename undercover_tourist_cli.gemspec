@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{A Ruby gem to view city and touris attraction details.}
   spec.description   = %q{A Ruby gem to view information from UndercoverTourist.com, providing a detailed look at attractions located in Orlando, Los Angeles, and San Diego.}
-  spec.homepage      = "git@github.com:mmarziano/undercover_tourist_cli.git"
+  spec.homepage      = "https://github.com/mmarziano/undercover_tourist_cli.git"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

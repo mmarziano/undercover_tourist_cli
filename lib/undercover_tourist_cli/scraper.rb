@@ -44,6 +44,10 @@ class Scraper
   
   def self.select_attraction
     input = gets.strip.to_i 
+    if input > @attractions.size 
+      puts "Invalid entry. Please try again."
+      Scraper.select_another_attraction
+    end 
     @attractions.select.with_index do |val, index|
       if input == index.to_i + 1
         @selected_attraction = val
@@ -69,6 +73,10 @@ class Scraper
   
   def self.select_another_attraction
     input = gets.strip.to_i
+    if input > @attractions.size 
+      puts "Invalid entry. Please try again."
+      Scraper.select_another_attraction
+    end 
     @attractions.select.with_index do |val, index|
       if input == index.to_i + 1
         @selected_attraction = val
