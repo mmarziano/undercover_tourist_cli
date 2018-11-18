@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["'Monica Marziano'"]
   spec.email         = ["'mmarziano1@gmail.com'"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = %q{A Ruby gem to view city and touris attraction details.}
+  spec.description   = %q{A Ruby gem to view information from UndercoverTourist.com, providing a detailed look at attractions located in Orlando, Los Angeles, and San Diego.}
   spec.homepage      = "git@github.com:mmarziano/undercover_tourist_cli.git"
   spec.license       = "MIT"
 
