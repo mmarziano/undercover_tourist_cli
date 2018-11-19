@@ -20,17 +20,23 @@ class Scraper
     @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
     return @page
   end
+  
+  def self.parse_attractions_page
+    @attraction_page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
+    return @attraction_page
+  end
 
   def self.scrape_city_summary
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
+    Scraper.parse_page
+    #@page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
     @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
     City.city_summary=(@city_attractions[:city_summary])
     City.city_summary
   end 
   
   def self.scrape_city_attractions
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
-    node = @page.css('.tile .tiletitle')
+    Scraper.parse_attractions_page
+    node = @attraction_page.css('.tile .tiletitle')
       node.each do |node|
         if node.text != "Attraction"
            @attractions << node.text 
@@ -39,7 +45,6 @@ class Scraper
       end
       @attractions.delete("Attraction")
     @city_attractions[:attractions] = @attractions
-
   end 
   
   def self.select_attraction
@@ -53,7 +58,7 @@ class Scraper
         @selected_attraction = val
       end
     end 
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
+    Scraper.parse_attractions_page
     node = @page.css('.tile')
     node.each do |node|
        url = node.children.css('a').attribute('href')
@@ -82,7 +87,7 @@ class Scraper
         @selected_attraction = val
       end
     end 
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
+    Scraper.parse_attractions_page
     node = @page.css('.tile')
     node.each do |node|
        url = node.children.css('a').attribute('href')
