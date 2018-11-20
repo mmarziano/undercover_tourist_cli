@@ -65,6 +65,8 @@ class Scraper
         if url != nil
            attraction_url = @base_path + "#{url}"
            @attraction_urls << attraction_url
+           @page = Nokogiri::HTML(open(@attraction_urls))
+           Scrape.scrape.details
         end
       end 
       @attraction_urls.select.with_index do |val, index|
@@ -77,7 +79,7 @@ class Scraper
   end
   
   def self.parse_selected_attraction_page
-      @page = Nokogiri::HTML(open(@selected_attraction_url))
+      @page = Nokogiri::HTML(open(@attraction_urls))
       return @page
   end 
 
