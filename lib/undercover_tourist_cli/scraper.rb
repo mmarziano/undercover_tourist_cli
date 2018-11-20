@@ -28,7 +28,6 @@ class Scraper
   
   def self.scrape_city_summary
     Scraper.parse_page
-    #@page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
     @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
     City.city_summary=(@city_attractions[:city_summary])
     City.city_summary
@@ -76,32 +75,10 @@ class Scraper
     Scraper.scrape_attraction_rating
   end
   
-  def self.select_another_attraction
-    input = gets.strip.to_i
-    if input > @attractions.size 
-      puts "Invalid entry. Please try again."
-      Scraper.select_another_attraction
-    end 
-    @attractions.select.with_index do |val, index|
-      if input == index.to_i + 1
-        @selected_attraction = val
-      end
-    end 
-    Scraper.parse_page
-    node = @page.css('.tile')
-    node.each do |node|
-       url = node.children.css('a').attribute('href')
-       attraction_url = @base_path + "#{url}"
-       @attraction_urls << attraction_url
-      end 
-    @attraction_urls.select.with_index do |val, index|
-      if input == index.to_i + 1
-        @selected_attraction_url = val
-      end
-    end
-    Attractions.name=(@selected_attraction)
-    Scraper.scrape_attraction_rating
-  end
+  def self.parse_selected_attration_page
+      @page = Nokogiri::HTML(open(@selected_attraction_url))
+      return @page
+  end 
   
   
   def self.scrape_attraction_rating
