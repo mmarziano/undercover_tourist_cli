@@ -29,6 +29,7 @@ class Scraper
   def self.scrape_city_summary
     Scraper.parse_page
     @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
+    #@selected_city = City.new(@city, @city_attractions[:city_summary])
     City.city_summary=(@city_attractions[:city_summary])
     City.city_summary
   end 
@@ -39,7 +40,7 @@ class Scraper
       node.each do |node|
         if node.text != "Attraction"
            @attractions << node.text 
-           Attractions.new(node.text)
+           #Attractions.new(node.text)
         end
       end
       @attractions.delete("Attraction")
@@ -71,7 +72,7 @@ class Scraper
           @selected_attraction_url = val
         end
       end
-    Attractions.name=(@selected_attraction)
+    #Attractions.name=(@selected_attraction)
     Scraper.scrape_details
   end
   
@@ -138,7 +139,15 @@ class Scraper
             end 
           end  
           Attractions.hours=(@city_attractions[:hours])
-          UndercoverTouristCli::Cli.results
+          x = Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
+          binding.pry
+          puts x.name
+          puts x.description
+          puts x.rating
+          puts x.current_crowd_rating
+          puts x.priority_attractions
+          puts x.hours
+          #UndercoverTouristCli::Cli.results
     end 
 
 end 
