@@ -59,21 +59,21 @@ class Scraper
     end 
     Scraper.parse_attraction_page
     node = @attraction_page.css('.tile')
-    node.each do |node|
+      node.each do |node|
        url = node.children.css('a').attribute('href')
         if url != nil
            attraction_url = @base_path + "#{url}"
            @attraction_urls << attraction_url
         end
       end 
-    @attraction_urls.select.with_index do |val, index|
-      if input == index.to_i + 1
-        @selected_attraction_url = val
+      @attraction_urls.select.with_index do |val, index|
+        if input == index.to_i + 1
+          @selected_attraction_url = val
+        end
       end
-    end
     Attractions.name=(@selected_attraction)
-    binding.pry
     Scraper.scrape_details
+  end
   
   def self.parse_selected_attraction_page
       @page = Nokogiri::HTML(open(@selected_attraction_url))
@@ -140,87 +140,5 @@ class Scraper
           Attractions.hours=(@city_attractions[:hours])
           UndercoverTouristCli::Cli.results
     end 
-  
-  def self.scrape_attraction_rating
-    @page = Nokogiri::HTML(open(@selected_attraction_url))
-    node1 = @page.css('.reviewpads')
-    if node1.empty?
-      @city_attractions[:rating] = "N/A"
-    else
-      node = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
-      @city_attractions[:rating] = node[0].capitalize + " Stars"
-    end
-      Attractions.rating=(@city_attractions[:rating])
-      Scraper.scrape_attraction_description
-  end 
-  
-  def self.scrape_attraction_description
-    @page = Nokogiri::HTML(open(@selected_attraction_url))
-     node = @page.css('.about-attraction').children.css('p').text
-    if node.empty?
-      @city_attractions[:description] = "N/A"
-    else
-     @city_attractions[:description] = node
-    end
-    Attractions.description=(@city_attractions[:description])
-    Scraper.scrape_attraction_crowdrating
-  end
-  
-  def self.scrape_attraction_crowdrating
-    @page = Nokogiri::HTML(open(@selected_attraction_url))
-     node = @page.css('.daydetail')
-     if node.nil?
-       @city_attractions[:current_crowd_rating] = "N/A"
-     else
-       @city_attractions[:current_crowd_rating] = node.first.text
-     end
-     
-     Attractions.current_crowd_rating=(@city_attractions[:current_crowd_rating])
-     Scraper.scrape_attraction_hours
-  end 
-  
-  def self.scrape_attraction_hours
-    @page = Nokogiri::HTML(open(@selected_attraction_url))
-    node2 = @page.css('.calattraction').attribute('data-filter-ids').value
-      if node2.include?('None')
-        @city_attractions[:hours] = "N/A"
-      elsif 
-        node = @page.css('calattraction .filterableitem').nil?
-          @city_attractions[:hours] = "N/A"
-      elsif 
-        node = @page.css('.calattraction .filterableitem .caltime')[0].nil?
-          @city_attractions[:hours] = "N/A"
-      else 
-        node = @page.css('.calattraction .filterableitem .caltime')[0].text.strip
-        if node == nil
-          @city_attractions[:hours] = "N/A"
-        elsif node.include?('EMH')
-          node1 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
-             hours = "#{node} " + "/ #{node1}"
-             @city_attractions[:hours] = hours
-        else 
-            hours = "#{node}" 
-             @city_attractions[:hours] = hours
-        end 
-      end  
-      Attractions.hours=(@city_attractions[:hours])
-      Scraper.scrape_priority_attractions
-  end 
-  
-  def self.scrape_priority_attractions
-    @priority_attractions = []
-    @page = Nokogiri::HTML(open(@selected_attraction_url))
-       node = @page.css('.fff-attractions').children.css('li').children.css('a')
-         node.each do |node|
-           @priority_attractions << node.text
-         end
-     if @priority_attractions.empty?
-         @city_attractions[:priority_attractions] = "N/A"
-       else 
-         @city_attractions[:priority_attractions] = @priority_attractions
-       end
-      Attractions.priority_attractions=(@city_attractions[:priority_attractions])
-      UndercoverTouristCli::Cli.results
-  end
 
 end 
