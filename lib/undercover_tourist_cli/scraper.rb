@@ -63,11 +63,12 @@ class Scraper
       node.each do |node|
        url = node.children.css('a').attribute('href')
         if url != nil
-           attraction_url = @base_path + "#{url}"
-           @attraction_urls << attraction_url
-           @page = Nokogiri::HTML(open(@attraction_urls))
-           Scrape.scrape.details
+           @attraction_url = @base_path + "#{url}"
+           #@attraction_urls << attraction_url
+           @page = Nokogiri::HTML(open(@attraction_url))
+           Scraper.scrape_details
         end
+        Attractions.all
       end 
       @attraction_urls.select.with_index do |val, index|
         if input == index.to_i + 1
@@ -79,7 +80,7 @@ class Scraper
   end
   
   def self.parse_selected_attraction_page
-      @page = Nokogiri::HTML(open(@attraction_urls))
+      @page = Nokogiri::HTML(open(@attraction_url))
       return @page
   end 
 
@@ -142,14 +143,8 @@ class Scraper
           end  
           Attractions.hours=(@city_attractions[:hours])
           x = Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
-          binding.pry
-          puts x.name
-          puts x.description
-          puts x.rating
-          puts x.current_crowd_rating
-          puts x.priority_attractions
-          puts x.hours
           #UndercoverTouristCli::Cli.results
     end 
-
+    
+    
 end 
