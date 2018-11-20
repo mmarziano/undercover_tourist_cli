@@ -72,6 +72,7 @@ class Scraper
       end
     end
     Attractions.name=(@selected_attraction)
+    binding.pry
     Scraper.scrape_details
   
   def self.parse_selected_attraction_page
@@ -82,12 +83,12 @@ class Scraper
   def self.scrape_details
     Scraper.parse_selected_attraction_page
     node = @page.css('.reviewpads')
-    if node.empty?
-      @city_attractions[:rating] = "N/A"
-    else
-      node1 = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
-      @city_attractions[:rating] = node1[0].capitalize + " Stars"
-    end
+      if node.empty?
+        @city_attractions[:rating] = "N/A"
+      else
+        node1 = @page.css('.reviewpads').attribute('class').value.split[1].split('star')
+        @city_attractions[:rating] = node1[0].capitalize + " Stars"
+      end
       Attractions.rating=(@city_attractions[:rating])
      node2 = @page.css('.about-attraction').children.css('p').text
         if node2.empty?
@@ -108,11 +109,11 @@ class Scraper
              node4.each do |node|
                @priority_attractions << node.text
              end
-         if @priority_attractions.empty?
-             @city_attractions[:priority_attractions] = "N/A"
-           else 
+            if @priority_attractions.empty?
+               @city_attractions[:priority_attractions] = "N/A"
+             else 
              @city_attractions[:priority_attractions] = @priority_attractions
-           end
+            end
           Attractions.priority_attractions=(@city_attractions[:priority_attractions])
         node5 = @page.css('.calattraction').attribute('data-filter-ids').value
           if node5.include?('None')
@@ -131,14 +132,14 @@ class Scraper
               node7 = @page.css('.calattraction .filterableitem .caltime')[1].text.strip
                  hours = "#{node6} " + "/ #{node7}"
                  @city_attractions[:hours] = hours
-            else 
+              else 
                 hours = "#{node6}" 
                  @city_attractions[:hours] = hours
             end 
           end  
           Attractions.hours=(@city_attractions[:hours])
           UndercoverTouristCli::Cli.results
-  end 
+    end 
   
   def self.scrape_attraction_rating
     @page = Nokogiri::HTML(open(@selected_attraction_url))
@@ -221,6 +222,5 @@ class Scraper
       Attractions.priority_attractions=(@city_attractions[:priority_attractions])
       UndercoverTouristCli::Cli.results
   end
-  
-  
+
 end 
