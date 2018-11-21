@@ -60,7 +60,7 @@ class Cli
       puts "Below is a list of attractions:"
       puts "-------------------------------"
             i = 1
-            Attractions.all.each do |attraction|
+            Attractions.all.name each do |attraction|
               puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
               i += 1
             end 

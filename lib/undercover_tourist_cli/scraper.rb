@@ -39,7 +39,9 @@ class Scraper
         node.each do |node|
           if node.text != "Attraction"
             @attractions << node.text 
+            Attractions.new(node.text)
           end 
+        end
             node1 = @attraction_page.css('.tile')
             url = node1.children.css('a').attribute('href')
                 if url != nil
@@ -48,11 +50,10 @@ class Scraper
                 end 
             @attractions.delete("Attraction")
         end 
-        binding.pry
+
         @attraction_urls.each do |url|
           Scraper.scrape_details(url)
           Attractions.new(node.text, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
-        end
       end   
  
   def self.select_attraction
@@ -72,11 +73,10 @@ class Scraper
        url = node.children.css('a').attribute('href')
         if url != nil
            @attraction_url = @base_path + "#{url}"
-           #@attraction_urls << attraction_url
-           @page = Nokogiri::HTML(open(@attraction_url))
-           Scraper.scrape_details
+           @attraction_urls << @attraction_url
+           #@page = Nokogiri::HTML(open(@attraction_url))
+           #Scraper.scrape_details
         end
-        Attractions.all
       end 
       @attraction_urls.select.with_index do |val, index|
         if input == index.to_i + 1
@@ -87,13 +87,13 @@ class Scraper
     Scraper.scrape_details
   end
   
-  def self.parse_selected_attraction_page(url)
-      @page = Nokogiri::HTML(open(url))
+  def self.parse_selected_attraction_page
+      @page = Nokogiri::HTML(open(@selected_attraction_url))
       return @page
   end 
 
-  def self.scrape_details(url)
-    @page = Nokogiri::HTML(open(url))
+  def self.scrape_details
+    Scraper.parse_selected_attraction_page
     node = @page.css('.reviewpads')
       if node.empty?
         @city_attractions[:rating] = "N/A"
@@ -151,6 +151,7 @@ class Scraper
           end  
           Attractions.hours=(@city_attractions[:hours])
           #UndercoverTouristCli::Cli.results
+          puts @city_attractions[:hours]
     end 
     
     
