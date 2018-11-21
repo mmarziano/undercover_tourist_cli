@@ -74,7 +74,7 @@ class Cli
   end 
   
     def self.results
-      puts "Attraction Name: ".colorize(:red) + Attractions.name 
+      puts "Attraction Name: ".colorize(:red) 
       puts "Attraction Description: ".colorize(:red) + Attractions.description
       puts "Attraction Rating: ".colorize(:red) + Attractions.rating 
       puts "Today's Attraction Crowd Size (Scale 1-10): ".colorize(:red) + Attractions.current_crowd_rating
@@ -87,7 +87,7 @@ class Cli
             puts attraction
           end 
         end
-      puts "Would you like to check out another attraction? (Y/N)"
+      puts "Would you like to check out another attraction? (Y/N)".colorize(:cyan)
       UndercoverTouristCli::Cli.pick_attraction_repeat
     end 
   end
