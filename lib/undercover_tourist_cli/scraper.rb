@@ -141,7 +141,7 @@ class Scraper
             end 
           end  
           Attractions.hours=(@city_attractions[:hours])
-          Attractions.all
+          Attractions.create
           #UndercoverTouristCli::Cli.results
          
     end 

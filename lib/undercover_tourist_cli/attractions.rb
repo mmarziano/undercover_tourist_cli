@@ -71,4 +71,8 @@ class Attractions
     @priority_attractions
   end
   
+  def self.create
+    puts "test"
+  end 
+  
 end 
