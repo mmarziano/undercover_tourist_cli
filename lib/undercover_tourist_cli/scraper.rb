@@ -39,12 +39,11 @@ class Scraper
         node.each do |node|
           if node.text != "Attraction"
             @attractions << node.text 
-            binding.pry
             Attractions.new(node.text)
           end 
         end
+        binding.pry
         @attractions.delete("Attraction")
-        Scraper.select_attraction
         #@attraction_urls.each do |url|
           #Scraper.scrape_details(url)
           #Attractions.new(node.text, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])

@@ -40,10 +40,12 @@ class Cli
   end 
   
   def self.pick_attraction
+    puts "Gathering information..."
+    Scraper.scrape_city_attractions
     puts "-------------------------------"
     puts "Below is a list of attractions:"
     puts "-------------------------------"
-    Scraper.scrape_city_attractions
+  
           i = 1
           Attractions.all.each do |attraction|
             puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
