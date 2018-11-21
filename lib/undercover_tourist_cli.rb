@@ -45,7 +45,6 @@ class Cli
     puts "-------------------------------"
     puts "Below is a list of attractions:"
     puts "-------------------------------"
-  
           i = 1
           Attractions.all.each do |attraction|
             puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
@@ -67,7 +66,7 @@ class Cli
               i += 1
             end 
           puts "Please select a number from the list above."
-          #Scraper.select_attraction
+          Scraper.select_attraction
     else 
       puts "Happy travels!"
       exit
@@ -75,7 +74,6 @@ class Cli
   end 
   
     def self.results
-      
       puts "Attraction Name: ".colorize(:red) + Attractions.name 
       puts "Attraction Description: ".colorize(:red) + Attractions.description
       puts "Attraction Rating: ".colorize(:red) + Attractions.rating 

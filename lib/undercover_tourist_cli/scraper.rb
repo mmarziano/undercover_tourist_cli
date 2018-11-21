@@ -42,11 +42,7 @@ class Scraper
             Attractions.new(node.text)
           end 
         end
-        binding.pry
         @attractions.delete("Attraction")
-        #@attraction_urls.each do |url|
-          #Scraper.scrape_details(url)
-          #Attractions.new(node.text, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
       end   
  
   def self.select_attraction
@@ -141,8 +137,10 @@ class Scraper
             end 
           end  
           Attractions.hours=(@city_attractions[:hours])
-          Attractions.create
-          #UndercoverTouristCli::Cli.results
+          Attractions.clear
+          binding.pry
+          Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
+          UndercoverTouristCli::Cli.results
          
     end 
     
