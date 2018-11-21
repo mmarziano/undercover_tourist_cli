@@ -65,7 +65,7 @@ class Cli
               i += 1
             end 
           puts "Please select a number from the list above."
-          Scraper.select_attraction
+          #Scraper.select_attraction
     else 
       puts "Happy travels!"
       exit
@@ -73,6 +73,7 @@ class Cli
   end 
   
     def self.results
+      
       puts "Attraction Name: ".colorize(:red) + Attractions.name 
       puts "Attraction Description: ".colorize(:red) + Attractions.description
       puts "Attraction Rating: ".colorize(:red) + Attractions.rating 

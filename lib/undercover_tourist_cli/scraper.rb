@@ -39,21 +39,15 @@ class Scraper
         node.each do |node|
           if node.text != "Attraction"
             @attractions << node.text 
+            binding.pry
             Attractions.new(node.text)
           end 
         end
-            node1 = @attraction_page.css('.tile')
-            url = node1.children.css('a').attribute('href')
-                if url != nil
-                 attraction_url = @base_path + "#{url}"
-                 @attraction_urls << attraction_url
-                end 
-            @attractions.delete("Attraction")
-        end 
-
-        @attraction_urls.each do |url|
-          Scraper.scrape_details(url)
-          Attractions.new(node.text, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
+        @attractions.delete("Attraction")
+        Scraper.select_attraction
+        #@attraction_urls.each do |url|
+          #Scraper.scrape_details(url)
+          #Attractions.new(node.text, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
       end   
  
   def self.select_attraction
@@ -74,8 +68,6 @@ class Scraper
         if url != nil
            @attraction_url = @base_path + "#{url}"
            @attraction_urls << @attraction_url
-           #@page = Nokogiri::HTML(open(@attraction_url))
-           #Scraper.scrape_details
         end
       end 
       @attraction_urls.select.with_index do |val, index|
@@ -83,8 +75,8 @@ class Scraper
           @selected_attraction_url = val
         end
       end
-    #Attractions.name=(@selected_attraction)
     Scraper.scrape_details
+    
   end
   
   def self.parse_selected_attraction_page
@@ -150,8 +142,9 @@ class Scraper
             end 
           end  
           Attractions.hours=(@city_attractions[:hours])
+          Attractions.all
           #UndercoverTouristCli::Cli.results
-          puts @city_attractions[:hours]
+         
     end 
     
     
