@@ -1,9 +1,10 @@
 
 
 class Attractions 
-  attr_accessor :name, :description, :rating, :current_crowd_rating, :priority_attractions, :hours
+  attr_accessor :name, :description, :rating, :current_crowd_rating, :priority_attractions, :hours, :list
   
   @@all = []
+  @@attractions_list = []
   
   def initialize(name = nil, description = nil, rating = nil, current_crowd_rating = nil, priority_attractions = nil, hours = nil)
     @name = name
@@ -27,9 +28,14 @@ class Attractions
     #@name
   #end 
   
-  def self.save
-    @@all << @name 
+  def self.save(name)
+     @@attractions_list << name unless @@attractions_list.include?(name)
   end 
+  
+  def self.list
+    @@attractions_list
+  end  
+  
   
   def self.rating=(rating)
     @rating = rating

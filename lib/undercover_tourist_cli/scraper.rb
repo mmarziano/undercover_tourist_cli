@@ -39,7 +39,7 @@ class Scraper
         node.each do |node|
           if node.text != "Attraction"
             @attractions << node.text 
-            Attractions.new(node.text)
+            Attractions.save(node.text)
           end 
         end
         @attractions.delete("Attraction")
