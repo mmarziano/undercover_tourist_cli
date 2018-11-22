@@ -47,7 +47,7 @@ class Cli
     puts "-------------------------------"
           i = 1
           Attractions.list.each do |attraction|
-            puts "#{i}.".colorize(:red) + " #{Attractions.name}".colorize(:blue)
+            puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
             i += 1
           end 
         puts "Please select a number from the list above."
@@ -61,8 +61,8 @@ class Cli
       puts "Below is a list of attractions:"
       puts "-------------------------------"
             i = 1
-            Attractions.list each do |attraction|
-              puts "#{i}.".colorize(:red) + " #{Attractions.list[i+1]}".colorize(:blue)
+            Attractions.list.each do |attraction|
+              puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
               i += 1
             end 
           puts "Please select a number from the list above."

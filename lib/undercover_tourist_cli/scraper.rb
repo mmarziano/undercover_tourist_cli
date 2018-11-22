@@ -35,7 +35,7 @@ class Scraper
   
     def self.scrape_city_attractions
       Scraper.parse_attraction_page
-      node = @attraction_page.css('.tile .tiletitle')
+      node = @attraction_page.css('.tiletitle')
         node.each do |node|
           if node.text != "Attraction"
             @attractions << node.text 
