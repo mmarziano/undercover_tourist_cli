@@ -139,6 +139,7 @@ class Scraper
           Attractions.hours=(@city_attractions[:hours])
           Attractions.clear
           x = Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
+          binding.pry
           UndercoverTouristCli::Cli.results
          
     end 
