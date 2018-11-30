@@ -20,13 +20,13 @@ class Attractions
     @@all 
   end 
   
-  #def self.name=(name)
-    #@name = name
-  #end 
+  def self.name=(name)
+    @name = name
+  end 
   
-  #def self.name 
-    #@name
-  #end 
+  def self.name 
+    @name
+  end 
   
   def self.save(name)
      @@attractions_list << name unless @@attractions_list.include?(name)

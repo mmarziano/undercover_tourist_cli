@@ -46,7 +46,7 @@ class Cli
     puts "Below is a list of attractions:"
     puts "-------------------------------"
           i = 1
-          Attractions.list.each do |attraction|
+          Scraper.attractions.each do |attraction|
             puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
             i += 1
           end 
@@ -61,7 +61,7 @@ class Cli
       puts "Below is a list of attractions:"
       puts "-------------------------------"
             i = 1
-            Attractions.list.each do |attraction|
+            Scraper.attractions.each do |attraction|
               puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
               i += 1
             end 
@@ -74,9 +74,9 @@ class Cli
   end 
   
     def self.results
-      puts "------------------------"
+      puts "---------------------------------------------------".colorize(:red)
       puts "***#{Attractions.name}***"
-      puts "------------------------"
+      puts "---------------------------------------------------".colorize(:red)
       puts ""
       puts "Attraction Description: ".colorize(:red) + Attractions.description
       puts "Attraction Rating: ".colorize(:red) + Attractions.rating 

@@ -7,6 +7,10 @@ class Scraper
   @attractions = []
   @attraction_urls = []
   
+  def self.attractions
+    @attractions
+  end 
+  
   def self.city=(city)
     @city = city.downcase
   end 
@@ -39,7 +43,6 @@ class Scraper
         node.each do |node|
           if node.text != "Attraction"
             @attractions << node.text 
-            Attractions.save(node.text)
           end 
         end
         @attractions.delete("Attraction")
@@ -54,6 +57,7 @@ class Scraper
     @attractions.select.with_index do |val, index|
       if input == index.to_i + 1
         @selected_attraction = val
+        Attractions.name=(@selected_attraction)
       end
     end 
     Scraper.parse_attraction_page
@@ -137,9 +141,8 @@ class Scraper
             end 
           end  
           Attractions.hours=(@city_attractions[:hours])
-          Attractions.clear
+          #Attractions.clear
           x = Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
-          binding.pry
           UndercoverTouristCli::Cli.results
          
     end 
