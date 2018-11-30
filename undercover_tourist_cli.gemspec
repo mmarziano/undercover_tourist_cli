@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "undercover_tourist_cli/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "undercover_tourist_cli"
+  spec.name          = "undercover-tourist"
   spec.version       = UndercoverTouristCli::VERSION
   spec.authors       = ["'Monica Marziano'"]
   spec.email         = ["'mmarziano1@gmail.com'"]
