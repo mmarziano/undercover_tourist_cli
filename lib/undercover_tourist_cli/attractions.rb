@@ -1,10 +1,9 @@
 
 
 class Attractions 
-  attr_accessor :name, :description, :rating, :current_crowd_rating, :priority_attractions, :hours, :list
+  attr_accessor :name, :description, :rating, :current_crowd_rating, :priority_attractions, :hours, :list, :city
   
   @@all = []
-  @@attractions_list = []
   
   def initialize(name = nil, description = nil, rating = nil, current_crowd_rating = nil, priority_attractions = nil, hours = nil)
     @name = name
@@ -23,6 +22,10 @@ class Attractions
   def self.name=(name)
     @name = name
   end 
+  
+  def find_by_city(city)
+    self.all.select {|a| a.city == city}
+  end
   
   def self.name 
     @name

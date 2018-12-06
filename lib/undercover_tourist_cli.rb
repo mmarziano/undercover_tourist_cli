@@ -1,8 +1,6 @@
 
 
-module UndercoverTouristCli
-
-class Cli 
+class UndercoverTouristCli::Cli 
   
   def call
     puts "---------------------------------"
@@ -15,11 +13,13 @@ class Cli
   def city_selector 
     input = gets.strip.downcase.split(' ').join('-')
     if input == "orlando" || input == "los-angeles" || input == "san-diego"
-      Scraper.city=(input)
-      Scraper.scrape_city_summary
+      #before I make a city and scrape it check if I already have one
+         city = City.new(input)
+          Scraper.scrape_city_summary(city)
+      
       puts "Great choice! Here's some more information on " + Scraper.city.split('-').map {|city| city.capitalize}.join(' ').colorize(:yellow) + 
     ". " + City.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
-      UndercoverTouristCli::Cli.choice
+      choice
     elsif input == "exit"
       puts "Exiting."
       exit
@@ -30,31 +30,33 @@ class Cli
     
   end 
   
-  def self.choice
+  def choice
     choice = gets.strip.downcase
       if choice == "Y" || choice == "y"
-        UndercoverTouristCli::Cli.pick_attraction
+        pick_attraction
       else 
-        UndercoverTouristCli::Cli.new.call
+        call
       end
   end 
   
-  def self.pick_attraction
+  def pick_attraction
     puts "Gathering information..."
-    Scraper.scrape_city_attractions
+    #don't scrpae if done
+    Scraper.scrape_city_attractions #take parameter (city)
     puts "-------------------------------"
     puts "Below is a list of attractions:"
     puts "-------------------------------"
           i = 1
-          Scraper.attractions.each do |attraction|
+          city.attractions.each do |attraction|
             puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
             i += 1
           end 
         puts "Please select a number from the list above."
         Scraper.select_attraction
+        results
   end 
   
-  def self.pick_attraction_repeat
+  def pick_attraction_repeat
     choice = gets.strip.downcase
     if choice == "Y" || choice == "y"
       puts "-------------------------------"
@@ -67,13 +69,14 @@ class Cli
             end 
           puts "Please select a number from the list above."
           Scraper.select_attraction
+          results
     else 
       puts "Happy travels!"
       exit
     end
   end 
   
-    def self.results
+    def results
       puts "---------------------------------------------------".colorize(:red)
       puts "***#{Attractions.name}***"
       puts "---------------------------------------------------".colorize(:red)
@@ -91,9 +94,7 @@ class Cli
           end 
         end
       puts "Would you like to check out another attraction? (Y/N)".colorize(:cyan)
-      UndercoverTouristCli::Cli.pick_attraction_repeat
+      pick_attraction_repeat
     end 
   end
-end
 
-UndercoverTouristCli::Cli.new.call

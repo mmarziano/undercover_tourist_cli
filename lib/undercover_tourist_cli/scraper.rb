@@ -1,43 +1,27 @@
 
 class Scraper 
-  attr_accessor :city, :page, :attractions
-  
-  @base_path = "https://www.undercovertourist.com"
-  @city_attractions = {}
-  @attractions = []
-  @attraction_urls = []
-  
-  def self.attractions
-    @attractions
-  end 
-  
-  def self.city=(city)
-    @city = city.downcase
-  end 
 
-  def self.city 
-    @city
-  end 
+  @base_path = "https://www.undercovertourist.com"
   
-  def self.parse_page
-    @page = Nokogiri::HTML(open(@base_path + "/#{@city}"))
-    return @page
+  def self.parse_page(city)
+    puts "***********Scraping City******"
+    @page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}"))
+    @page
   end
   
-  def self.scrape_city_summary
-    Scraper.parse_page
-    @city_attractions[:city_summary] = @page.css(".cityblurb").children.css("p").text
-    #@selected_city = City.new(@city, @city_attractions[:city_summary])
-    City.city_summary=(@city_attractions[:city_summary])
-    City.city_summary
+  def self.scrape_city_summary(city)
+    Scraper.parse_page(city)
+    city.city_summary = @page.css(".cityblurb").children.css("p").text
+    binding.pry
   end 
   
   def self.parse_attraction_page
+    puts "**********Scrape Attractions*******"
       @attraction_page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
       return @attraction_page
   end 
   
-    def self.scrape_city_attractions
+    def self.scrape_city_attractions(city)
       Scraper.parse_attraction_page
       node = @attraction_page.css('.tiletitle')
         node.each do |node|
@@ -48,7 +32,7 @@ class Scraper
         @attractions.delete("Attraction")
       end   
  
-  def self.select_attraction
+  def self.select_attraction #move to cli
     input = gets.strip.to_i 
     if input > @attractions.size 
       puts "Invalid entry. Please try again."
@@ -78,7 +62,8 @@ class Scraper
     
   end
   
-  def self.parse_selected_attraction_page
+  def self.parse_selected_attraction_page #(attraction)
+    puts "Scrape Attraction Detials *********"
       @page = Nokogiri::HTML(open(@selected_attraction_url))
       return @page
   end 
@@ -143,7 +128,7 @@ class Scraper
           Attractions.hours=(@city_attractions[:hours])
           #Attractions.clear
           x = Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions], @city_attractions[:hours])
-          UndercoverTouristCli::Cli.results
+       
          
     end 
     

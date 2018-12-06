@@ -1,26 +1,14 @@
 
 
 class City 
-  attr_accessor :name, :city_summary 
+  attr_accessor :name, :city_summary, :attractions 
   
   @@all = []
   
-  def initialize(name = nil, city_summary = nil)
-    @name = name 
-    @city_summary = city_summary
+  def initialize(name = nil)
+    @name = name.capitalize
+    @attractions = []
     @@all << self
-  end 
-  
-  def self.name 
-    @name
-  end 
-  
-  def self.city_summary=(summary)
-    @city_summary = summary
-  end 
-  
-  def self.city_summary
-    @city_summary
   end 
   
   def self.all 
