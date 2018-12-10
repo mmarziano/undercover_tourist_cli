@@ -12,7 +12,6 @@ class Scraper
   def self.scrape_city_summary(city)
     Scraper.parse_page(city)
     city.city_summary = @page.css(".cityblurb").children.css("p").text
-    binding.pry
   end 
   
   def self.parse_attraction_page

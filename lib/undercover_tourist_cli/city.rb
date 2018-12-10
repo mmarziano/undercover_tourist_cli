@@ -12,7 +12,7 @@ class City
   end 
   
   def self.all 
-    puts @@all 
+    @@all 
   end 
 
 end 
