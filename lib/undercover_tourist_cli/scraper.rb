@@ -15,7 +15,7 @@ class Scraper
   
   def self.parse_attraction_page
     puts "**********Scrape Attractions*******"
-      @attraction_page = Nokogiri::HTML(open(@base_path + "/#{@city}" +"/attractions"))
+      @attraction_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
       return @attraction_page
   end 
   
