@@ -13,21 +13,23 @@ class Scraper
     city.city_summary = @page.css(".cityblurb").children.css("p").text
   end 
   
-  def self.parse_attraction_page
-    puts "**********Scrape Attractions*******"
-      @attraction_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
-      return @attraction_page
-  end 
+  #def self.parse_attraction_page
+    #puts "**********Scrape Attractions*******"
+      #attraction_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
+      #return @attraction_page
+  #end 
   
     def self.scrape_city_attractions(city)
-      Scraper.parse_attraction_page
+      @attraction_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
+      binding.pry
       node = @attraction_page.css('.tiletitle')
         node.each do |node|
           if node.text != "Attraction"
-            @attractions << node.text 
+            new = Attractions.new(node.text)
           end 
         end
-        @attractions.delete("Attraction")
+        Attractions.all
+        #@attractions.delete("Attraction")
       end   
  
   def self.select_attraction #move to cli

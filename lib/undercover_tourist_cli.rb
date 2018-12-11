@@ -15,23 +15,19 @@ class UndercoverTouristCli::Cli
     city = City.new(input)
     Scraper.scrape_city_summary(city)
     puts "Great choice! Here's some more information on " + city.name.colorize(:yellow) + ". " + city.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
-    choice
-  end 
-  
-  
-  def choice
     choice = gets.strip.downcase
       if choice == "Y" || choice == "y"
-        pick_attraction
+        pick_attraction(city)
       else 
         call
       end
   end 
+
   
-  def pick_attraction
+  def pick_attraction(city)
     puts "Gathering information..."
     #don't scrpae if done
-    Scraper.scrape_city_attractions #take parameter (city)
+    Scraper.scrape_city_attractions(city) #take parameter (city)
     puts "-------------------------------"
     puts "Below is a list of attractions:"
     puts "-------------------------------"
