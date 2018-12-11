@@ -4,7 +4,6 @@ class Scraper
   @base_path = "https://www.undercovertourist.com"
   
   def self.parse_page(city)
-    puts "***********Scraping City******"
     @page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}"))
     @page
   end
