@@ -27,13 +27,13 @@ class UndercoverTouristCli::Cli
   def pick_attraction(city)
     puts "Gathering information..."
     #don't scrpae if done
-    Scraper.scrape_city_attractions(city) #take parameter (city)
+    Scraper.scrape_city_attractions(city)
     puts "-------------------------------"
     puts "Below is a list of attractions:"
     puts "-------------------------------"
           i = 1
-          city.attractions.each do |attraction|
-            puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
+          Attractions.all.each do |attraction|
+            puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
             i += 1
           end 
         puts "Please select a number from the list above."
