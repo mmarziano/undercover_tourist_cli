@@ -37,9 +37,39 @@ class UndercoverTouristCli::Cli
             i += 1
           end 
         puts "Please select a number from the list above."
-        Scraper.select_attraction
+        select_attraction
         results
   end 
+  
+  def select_attraction 
+    input = gets.strip.to_i 
+      if input > Attractions.all.size || input < 0
+        puts "Invalid entry. Please try again."
+        select_attraction
+      end 
+      Attractions.all.select.with_index do |val, index|
+        if input == index.to_i + 1
+          @selected_attraction = val
+        end
+      end 
+    Scraper.parse_attraction_page(@selected_attraction)
+    #node = @attraction_page.css('.tile')
+      #node.each do |node|
+       #url = node.children.css('a').attribute('href')
+        #if url != nil
+           #@attraction_url = @base_path + "#{url}"
+           #@attraction_urls << @attraction_url
+        #end
+      #end 
+      #@attraction_urls.select.with_index do |val, index|
+        #if input == index.to_i + 1
+          #@selected_attraction_url = val
+        #end
+      #end
+    #Scraper.scrape_details
+    
+  end
+  
   
   def pick_attraction_repeat
     choice = gets.strip.downcase

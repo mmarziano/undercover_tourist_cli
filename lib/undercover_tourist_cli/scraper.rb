@@ -19,6 +19,7 @@ class Scraper
         node.each do |node|
           if node.text != "Attraction"
             new = Attractions.new(node.text)
+            new.city=(city)
           end 
         end
         Attractions.all
@@ -36,15 +37,19 @@ class Scraper
         Attractions.name=(@selected_attraction)
       end
     end 
-    Scraper.parse_attraction_page
+  end  
+    
+  def self.parse_attraction_page(attraction)
+    @attraction_page = Nokogiri::HTML(open(@base_path + "/#{attraction.city.name.downcase}" +"/attractions"))
     node = @attraction_page.css('.tile')
       node.each do |node|
        url = node.children.css('a').attribute('href')
         if url != nil
-           @attraction_url = @base_path + "#{url}"
-           @attraction_urls << @attraction_url
+           attraction.url=(@base_path + "#{url}")
         end
       end 
+      Attractions.all
+      binding.pry
       @attraction_urls.select.with_index do |val, index|
         if input == index.to_i + 1
           @selected_attraction_url = val
@@ -54,9 +59,9 @@ class Scraper
     
   end
   
-  def self.parse_selected_attraction_page #(attraction)
-    puts "Scrape Attraction Detials *********"
-      @page = Nokogiri::HTML(open(@selected_attraction_url))
+  def self.parse_selected_attraction_page(selected_attraction)
+    puts "******* Acquiring Attraction Details *********"
+      @page = Nokogiri::HTML(open(attraction.url))
       return @page
   end 
 
