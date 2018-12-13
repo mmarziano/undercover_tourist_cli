@@ -38,16 +38,19 @@ class Scraper
       end
     end 
   end  
+  
+ # defself.assign_url(attraction)
+  
     
   def self.parse_attraction_page(attraction)
     @attraction_page = Nokogiri::HTML(open(@base_path + "/#{attraction.city.name.downcase}" +"/attractions"))
     node = @attraction_page.css('.tile')
       node.each do |node|
        url = node.children.css('a').attribute('href')
-        if url != nil
-           attraction.url=(@base_path + "#{url}")
-        end
-      end 
+          if url != nil
+             attraction.url=(@base_path + "#{url}")
+          end
+        end 
       Attractions.all
       binding.pry
       @attraction_urls.select.with_index do |val, index|
