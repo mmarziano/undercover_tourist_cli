@@ -17,14 +17,14 @@ class UndercoverTouristCli::Cli
     puts "Great choice! Here's some more information on " + city.name.colorize(:yellow) + ". " + city.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
     choice = gets.strip.downcase
       if choice == "Y" || choice == "y"
-        pick_attraction(city)
+        attraction_list(city)
       else 
         call
       end
   end 
 
   
-  def pick_attraction(city)
+  def attraction_list(city)
     puts "Gathering information..."
     #don't scrpae if done
     Scraper.scrape_city_attractions(city)
