@@ -20,29 +20,13 @@ class Scraper
           if node.text != "Attraction"
             new = Attractions.new(node.text)
             new.city=(city)
+            city.attractions << node.text
           end 
         end
         Attractions.all
       end   
- 
-  def self.select_attraction #move to cli
-    input = gets.strip.to_i 
-    if input > @attractions.size 
-      puts "Invalid entry. Please try again."
-      Scraper.select_attraction
-    end 
-    @attractions.select.with_index do |val, index|
-      if input == index.to_i + 1
-        @selected_attraction = val
-        Attractions.name=(@selected_attraction)
-      end
-    end 
-  end  
-  
- # defqself.assign_url(attraction)
-  
     
-  def self.parse_attraction_page(attraction)
+  def self.attraction_details(attraction)
     @attraction_page = Nokogiri::HTML(open(@base_path + "/#{attraction.city.name.downcase}" +"/attractions"))
     node = @attraction_page.css('.tile')
     Attractions.all.each do |x| 
@@ -59,25 +43,20 @@ class Scraper
         attraction.rating=("N/A")
       else
         node1 = attraction_info.css('.reviewpads').attribute('class').value.split[1].split('star')
-        @attraction.rating=(node1[0].capitalize + " Stars")
+        attraction.rating=(node1[0].capitalize + " Stars")
       end
-
-    binding.pry
-      #Attractions.rating=(@city_attractions[:rating])
-    #node2 = attraction_info.css('.about-attraction').children.css('p').text
-        #if node2.empty?
-          #@city_attractions[:description] = "N/A"
-        #else
-         #@city_attractions[:description] = node2
-        #end
-        #Attractions.description=(@city_attractions[:description])
-      #node3 = attraction_info.css('.daydetail')
-         #if node3.nil?
-           #@city_attractions[:current_crowd_rating] = "N/A"
-         #else
-           #@city_attractions[:current_crowd_rating] = node3.first.text
-         #end
-         #Attractions.current_crowd_rating=(@city_attractions[:current_crowd_rating])  
+    node2 = attraction_info.css('.about-attraction').children.css('p').text
+        if node2.empty?
+          attraction.description=("N/A")
+        else
+         attraction.description=(node2)
+        end
+    node3 = attraction_info.css('.daydetail')
+         if node3.nil?
+           attraction.current_crowd_rating=("N/A")
+         else
+           attraction.current_crowd_rating=(node3.first.text)
+         end
      #@priority_attractions = []
         #node4 = attraction_info.css('.fff-attractions').children.css('li').children.css('a')
              #node4.each do |node|
@@ -114,7 +93,7 @@ class Scraper
           #Attractions.hours=(@city_attractions[:hours])
           #Attractions.clear
           #x = Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[#:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions]#, @city_attractions[:hours])
-    
+    binding.pry
     
     
   end

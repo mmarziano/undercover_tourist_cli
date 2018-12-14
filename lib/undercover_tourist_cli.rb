@@ -52,7 +52,7 @@ class UndercoverTouristCli::Cli
           @selected_attraction = val
         end
       end 
-    Scraper.parse_attraction_page(@selected_attraction)
+    Scraper.attraction_details(@selected_attraction)
     #node = @attraction_page.css('.tile')
       #node.each do |node|
        #url = node.children.css('a').attribute('href')
