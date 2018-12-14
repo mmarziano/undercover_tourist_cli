@@ -57,41 +57,36 @@ class Scraper
          else
            attraction.current_crowd_rating=(node3.first.text)
          end
-     #@priority_attractions = []
-        #node4 = attraction_info.css('.fff-attractions').children.css('li').children.css('a')
-             #node4.each do |node|
-               #@priority_attractions << node.text
-             #end
-            #if @priority_attractions.empty?
-               #@city_attractions[:priority_attractions] = "N/A"
-             #else 
-             #@city_attractions[:priority_attractions] = @priority_attractions
-            #end
-          #Attractions.priority_attractions=(@city_attractions[:priority_attractions])
-        #node5 = attraction_info.css('.calattraction').attribute('data-filter-ids').value
-          #if node5.include?('None')
-            #@city_attractions[:hours] = "N/A"
-          #elsif 
-            #node6 = attraction_info.css('calattraction .filterableitem').nil?
-              #@city_attractions[:hours] = "N/A"
-          #elsif 
-            #node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].nil?
-             # @city_attractions[:hours] = "N/A"
-          #else 
-            #node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].text.strip
-            #if node6 == nil
-              #@city_attractions[:hours] = "N/A"
-            #elsif node6.include?('EMH')
-              #node7 = attraction_info.css('.calattraction .filterableitem .caltime')[1].text.strip
-                 #hours = "#{node6} " + "/ #{node7}"
-                 #@city_attractions[:hours] = hours
-              #lse 
-                #hours = "#{node6}" 
-                 #@city_attractions[:hours] = hours
-            #end 
-          #end  
-          #Attractions.hours=(@city_attractions[:hours])
-          #Attractions.clear
+    node4 = attraction_info.css('.fff-attractions').children.css('li').children.css('a')
+           node4.each do |node|
+             attraction.priority_attractions << node.text
+           end
+         if attractions.priority_attractions.empty?
+           attraction.priority_attractions=("N/A")
+         end
+    node5 = attraction_info.css('.calattraction').attribute('data-filter-ids').value
+          if node5.include?('None')
+            attraction.hours=("N/A")
+          elsif 
+            node6 = attraction_info.css('calattraction .filterableitem').nil?
+              attraction.hours=("N/A")
+          elsif 
+            node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].nil?
+             attraction.hours=("N/A")
+          else 
+            node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].text.strip
+              if node6 == nil
+                attraction.hours=("N/A")
+              elsif node6.include?('EMH')
+                node7 = attraction_info.css('.calattraction .filterableitem .caltime')[1].text.strip
+                   hours = "#{node6} " + "/ #{node7}"
+                   attraction.hours=(hours)
+              else 
+                   hours = "#{node6}" 
+                   attraction.hours=(hours)
+              end 
+          end  
+
           #x = Attractions.new(@selected_attraction, @city_attractions[:description], @city_attractions[#:rating], @city_attractions[:current_crowd_rating], @city_attractions[:priority_attractions]#, @city_attractions[:hours])
     binding.pry
     

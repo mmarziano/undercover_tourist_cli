@@ -10,7 +10,7 @@ class Attractions
     @description = description
     @rating = rating
     @current_crowd_rating = current_crowd_rating
-    @priority_attractions = priority_attractions
+    @priority_attractions = []
     @hours = hours
     @city = city
     @url = url
