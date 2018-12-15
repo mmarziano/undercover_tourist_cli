@@ -14,8 +14,8 @@ class Scraper
   end 
   
     def self.scrape_city_attractions(city)
-      @attraction_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
-      node = @attraction_page.css('.tiletitle')
+      @city_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
+      node = @city_page.css('.tiletitle')
         node.each do |node|
           if node.text != "Attraction"
             new = Attractions.new(node.text)
@@ -29,14 +29,20 @@ class Scraper
   def self.attraction_details(attraction)
     @attraction_page = Nokogiri::HTML(open(@base_path + "/#{attraction.city.name.downcase}" +"/attractions"))
     node = @attraction_page.css('.tile')
-    Attractions.all.each do |x| 
-       if x.name == attraction.name
+    url_list = []
+      node.each do |node|
          url = node.children.css('a').attribute('href')
             if url != nil
-               attraction.url=(@base_path + "#{url}")
+               url_list << url.value
             end
         end 
+    Attractions.all.each do |attraction|
+      url_list.each do |url|
+        if url.include?(attraction.name.downcase.gsub!(/\W+/,' ').split(' ').join('-'))
+          attraction.url=(url)
+        end
       end
+    end 
     attraction_info = Nokogiri::HTML(open(attraction.url))
     node = attraction_info.css('.reviewpads')
       if node.empty?
