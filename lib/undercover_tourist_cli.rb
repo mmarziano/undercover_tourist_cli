@@ -38,7 +38,6 @@ class UndercoverTouristCli::Cli
           end 
         puts "Please select a number from the list above."
         select_attraction
-        results
   end 
   
   def select_attraction 
@@ -54,7 +53,6 @@ class UndercoverTouristCli::Cli
       end 
     puts "Gathering details for #{@selected_attraction.name}..."
     Scraper.attraction_details(@selected_attraction)
-    
     results(@selected_attraction)
   end
   
@@ -71,8 +69,7 @@ class UndercoverTouristCli::Cli
               i += 1
             end 
           puts "Please select a number from the list above."
-          Scraper.select_attraction
-          results
+          select_attraction
     else 
       puts "Happy travels!"
       exit
@@ -80,7 +77,7 @@ class UndercoverTouristCli::Cli
   end 
   
     def results(attraction)
-      binding.pry
+      
       puts "---------------------------------------------------".colorize(:red)
       puts "***#{attraction.name}***"
       puts "---------------------------------------------------".colorize(:red)
@@ -98,7 +95,7 @@ class UndercoverTouristCli::Cli
           end 
         end
       puts "Would you like to check out another attraction? (Y/N)".colorize(:cyan)
-      #pick_attraction_repeat
+      pick_attraction_repeat
       exit
   end
 end
