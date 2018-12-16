@@ -1,7 +1,7 @@
 
 
 class City 
-  attr_accessor :name, :city_summary, :attractions 
+  attr_accessor :name, :city_summary, :attractions, :urls
   
   @@all = []
   

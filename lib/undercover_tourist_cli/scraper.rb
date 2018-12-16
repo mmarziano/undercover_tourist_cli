@@ -34,16 +34,18 @@ class Scraper
            url = node.children.css('a').attribute('href')
               if url != nil 
                @url_list << @base_path + url.value
+               city.urls=(@url_list)
             end
         end 
-        
     end  
     
-  def self.attraction_details(attraction)
-    @url_list.each do |url|
-      if url.include?(attraction.name.downcase.gsub!(/\W+/,' ').split(' ').join('-'))
-        attraction.url=(url)
-        attraction_info = Nokogiri::HTML(open(url))
+  def self.attraction_details(attraction, city)
+        Attractions.all.select.with_index do |val, index|
+          if val.name == attraction.name
+            @selected_attraction_url = city.urls[index]
+          end
+        end 
+        attraction_info = Nokogiri::HTML(open(@selected_attraction_url))
         node = attraction_info.css('.reviewpads')
           if node.empty?
             attraction.rating=("N/A")
@@ -93,6 +95,5 @@ class Scraper
                   end 
               end  
           end
-        end
-      end  
+
   end 

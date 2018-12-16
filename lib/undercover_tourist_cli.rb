@@ -37,10 +37,10 @@ class UndercoverTouristCli::Cli
             i += 1
           end 
         puts "Please select a number from the list above."
-        select_attraction
+        select_attraction(city)
   end 
   
-  def select_attraction 
+  def select_attraction(city)
     input = gets.strip.to_i 
       if input > Attractions.all.size || input < 0
         puts "Invalid entry. Please try again."
@@ -52,12 +52,12 @@ class UndercoverTouristCli::Cli
         end
       end 
     puts "Gathering details for #{@selected_attraction.name}..."
-    Scraper.attraction_details(@selected_attraction)
-    results(@selected_attraction)
+    Scraper.attraction_details(@selected_attraction, city)
+    results(@selected_attraction, city)
   end
   
   
-  def pick_attraction_repeat
+  def pick_attraction_repeat(city)
     choice = gets.strip.downcase
     if choice == "Y" || choice == "y"
       puts "-------------------------------"
@@ -69,14 +69,14 @@ class UndercoverTouristCli::Cli
               i += 1
             end 
           puts "Please select a number from the list above."
-          select_attraction
+          select_attraction(city)
     else 
       puts "Happy travels!"
       exit
     end
   end 
   
-    def results(attraction)
+    def results(attraction, city)
       
       puts "---------------------------------------------------".colorize(:red)
       puts "***#{attraction.name}***"
@@ -95,7 +95,7 @@ class UndercoverTouristCli::Cli
           end 
         end
       puts "Would you like to check out another attraction? (Y/N)".colorize(:cyan)
-      pick_attraction_repeat
+      pick_attraction_repeat(city)
       exit
   end
 end
