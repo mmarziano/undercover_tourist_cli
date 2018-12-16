@@ -42,7 +42,6 @@ class Scraper
   def self.attraction_details(attraction)
     @url_list.each do |url|
       if url.include?(attraction.name.downcase.gsub!(/\W+/,' ').split(' ').join('-'))
-        binding.pry
         attraction.url=(url)
         attraction_info = Nokogiri::HTML(open(url))
         node = attraction_info.css('.reviewpads')

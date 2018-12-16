@@ -54,6 +54,7 @@ class UndercoverTouristCli::Cli
       end 
     puts "Gathering details for #{@selected_attraction.name}..."
     Scraper.attraction_details(@selected_attraction)
+    
     results(@selected_attraction)
   end
   
@@ -79,6 +80,7 @@ class UndercoverTouristCli::Cli
   end 
   
     def results(attraction)
+      binding.pry
       puts "---------------------------------------------------".colorize(:red)
       puts "***#{attraction.name}***"
       puts "---------------------------------------------------".colorize(:red)
