@@ -76,6 +76,7 @@ class UndercoverTouristCli::Cli
       input = gets.strip.downcase
         if input == "y"
           call
+          binding.pry
         else 
           puts "Happy travels!"
           exit
