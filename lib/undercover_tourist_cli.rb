@@ -32,8 +32,10 @@ class UndercoverTouristCli::Cli
         puts "-------------------------------"
           i = 1
           Attractions.all.each do |attraction|
-            puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
-            i += 1
+            if attraction.city == city
+              puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
+              i += 1
+            end
           end 
         puts "Please select a number from the list above."
         select_attraction(city)

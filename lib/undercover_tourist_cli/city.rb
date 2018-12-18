@@ -14,10 +14,6 @@ class City
   def self.all 
     @@all 
   end 
-
-  def self.find_by_name(name)
-    @@all.select {|a| a.name == name}
-  end 
   
 end 
     
