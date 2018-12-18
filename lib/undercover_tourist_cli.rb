@@ -43,15 +43,15 @@ class UndercoverTouristCli::Cli
   
   def select_attraction(city)
     input = gets.strip.to_i 
-      if input > Attractions.all.size || input < 0
+      if input > Attractions.all.count || input < 0
         puts "Invalid entry. Please try again."
-        select_attraction
+        select_attraction(city)
       end 
-      Attractions.all.select.with_index do |val, index|
-        if input == index.to_i + 1
-          @selected_attraction = val
-        end
-      end 
+        Attractions.all.select.with_index do |val, index|
+          if val.city.name == city.name && input == index.to_i + 1
+            @selected_attraction = val
+          end
+        end 
     puts "Gathering details for #{@selected_attraction.name}..."
     Scraper.attraction_details(@selected_attraction, city)
     results(@selected_attraction, city)
