@@ -71,8 +71,14 @@ class UndercoverTouristCli::Cli
           puts "Please select a number from the list above."
           select_attraction(city)
     else 
-      puts "Happy travels!"
-      exit
+      puts "Would you like to explore another city (Y/N)?"
+      input = gets.strip.downcase
+        if input == "y"
+          call
+        else 
+          puts "Happy travels!"
+          exit
+        end
     end
   end 
   
