@@ -26,18 +26,6 @@ class UndercoverTouristCli::Cli
   
   def attraction_list(city)
     puts "Gathering information..."
-    if City.find_by_name(city)
-      puts "-------------------------------"
-      puts "Below is a list of attractions:"
-      puts "-------------------------------"
-          i = 1
-          Attractions.all.each do |attraction|
-            puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
-            i += 1
-          end 
-        puts "Please select a number from the list above."
-        select_attraction(city)
-    else 
         Scraper.scrape_city_attractions(city)
         puts "-------------------------------"
         puts "Below is a list of attractions:"
@@ -49,7 +37,6 @@ class UndercoverTouristCli::Cli
           end 
         puts "Please select a number from the list above."
         select_attraction(city)
-      end
   end 
   
   def select_attraction(city)
