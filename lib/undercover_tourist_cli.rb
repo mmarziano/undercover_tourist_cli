@@ -52,7 +52,6 @@ class UndercoverTouristCli::Cli
           end
         end 
     puts "Gathering details for #{@selected_attraction}..."
-    #attraction = Attractions.find_by_name(@selected_attraction)
     Scraper.attraction_details(Attractions.find_by_name(@selected_attraction), city)
     results(Attractions.find_by_name(@selected_attraction), city)
   end
