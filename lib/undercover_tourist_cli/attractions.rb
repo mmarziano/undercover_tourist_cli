@@ -30,7 +30,7 @@ class Attractions
   end
   
   def self.find_by_name(name)
-    attraction = @@all.select {|a| a.name == name}
+    @@all.select {|a| a.name == name}
   end
   
   def self.name 

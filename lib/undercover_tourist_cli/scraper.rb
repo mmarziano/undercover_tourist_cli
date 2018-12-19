@@ -18,11 +18,13 @@ class Scraper
     node = @city_page.css('.tiletitle')
       node.each do |node|
         if node.text != "Attraction" 
-          new = Attractions.new(node.text)
-          new.city=(city)
-          city.attractions << node.text unless city.attractions.include?(node.text)
+          city.attractions << node.text unless city.attractions.include?(node.text) 
         end 
-      end
+      end 
+      city.attractions.each do |object|
+        new = Attractions.new(object) 
+        new.city=(city) 
+      end 
       scrape_urls(city)
     end   
     
@@ -40,22 +42,20 @@ class Scraper
     end  
     
   def self.attraction_details(selected_attraction, city)
-        Attractions.find_by_name(selected_attraction)
-        binding.pry
+        x = Attractions.find_by_name(selected_attraction)
         city.attractions.select.with_index do |val, index|
           if val == selected_attraction
             @selected_attraction_url = city.urls[index]
-            attraction.url=(@selected_attraction_url)
-            binding.pry
+            #x.url=(@selected_attraction_url)
           end
         end
         attraction_info = Nokogiri::HTML(open(@selected_attraction_url))
         node = attraction_info.css('.reviewpads')
           if node.empty?
-            x[0].rating=("N/A")
+            x.rating=("N/A")
           else
             node1 = attraction_info.css('.reviewpads').attribute('class').value.split[1].split('star')
-            x[0].rating=(node1[0].capitalize + " Stars")
+            x.rating=(node1[0].capitalize + " Stars")
           end
         node2 = attraction_info.css('.about-attraction').children.css('p').text
             if node2.empty?
