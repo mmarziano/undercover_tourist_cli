@@ -65,18 +65,17 @@ class UndercoverTouristCli::Cli
       puts "Below is a list of attractions:"
       puts "-------------------------------"
             i = 1
-            Attractions.all.each do |attraction|
-              puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
+            city.attractions.each do |attraction|
+              puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
               i += 1
             end 
           puts "Please select a number from the list above."
           select_attraction(city)
-    else 
+      else 
       puts "Would you like to explore another city (Y/N)?"
       input = gets.strip.downcase
         if input == "y"
           call
-          binding.pry
         else 
           puts "Happy travels!"
           exit
