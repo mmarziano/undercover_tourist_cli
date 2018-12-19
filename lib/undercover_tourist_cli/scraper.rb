@@ -17,10 +17,10 @@ class Scraper
     @city_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
     node = @city_page.css('.tiletitle')
       node.each do |node|
-        if node.text != "Attraction"
+        if node.text != "Attraction" 
           new = Attractions.new(node.text)
           new.city=(city)
-          city.attractions << node.text
+          city.attractions << node.text unless city.attractions.include?(node.text)
         end 
       end
       scrape_urls(city)
@@ -39,60 +39,63 @@ class Scraper
         end 
     end  
     
-  def self.attraction_details(attraction, city)
-        city.attractions.select.with_index do |val, index|
-          if val == attraction
-            @selected_attraction_url = city.urls[index]
-          end
-        end 
+  def self.attraction_details(selected_attraction, city)
+        Attractions.find_by_name(selected_attraction)
         binding.pry
+        city.attractions.select.with_index do |val, index|
+          if val == selected_attraction
+            @selected_attraction_url = city.urls[index]
+            attraction.url=(@selected_attraction_url)
+            binding.pry
+          end
+        end
         attraction_info = Nokogiri::HTML(open(@selected_attraction_url))
         node = attraction_info.css('.reviewpads')
           if node.empty?
-            attraction.rating=("N/A")
+            x[0].rating=("N/A")
           else
             node1 = attraction_info.css('.reviewpads').attribute('class').value.split[1].split('star')
-            attraction.rating=(node1[0].capitalize + " Stars")
+            x[0].rating=(node1[0].capitalize + " Stars")
           end
         node2 = attraction_info.css('.about-attraction').children.css('p').text
             if node2.empty?
-              attraction.description=("N/A")
+              x.description=("N/A")
             else
-             attraction.description=(node2)
+             x.description=(node2)
             end
         node3 = attraction_info.css('.daydetail')
              if node3.nil?
-               attraction.current_crowd_rating=("N/A")
+               x.current_crowd_rating=("N/A")
              else
-               attraction.current_crowd_rating=(node3.first.text)
+               x.current_crowd_rating=(node3.first.text)
              end
         node4 = attraction_info.css('.fff-attractions').children.css('li').children.css('a')
                node4.each do |node|
-                 attraction.priority_attractions << node.text
+                 x.priority_attractions << node.text
                end
-             if attraction.priority_attractions.empty?
-               attraction.priority_attractions=("N/A")
+             if x.priority_attractions.empty?
+               x.priority_attractions=("N/A")
              end
         node5 = attraction_info.css('.calattraction').attribute('data-filter-ids').value
               if node5.include?('None')
-                attraction.hours=("N/A")
+                x.hours=("N/A")
               elsif 
                 node6 = attraction_info.css('calattraction .filterableitem').nil?
-                  attraction.hours=("N/A")
+                  x.hours=("N/A")
               elsif 
                 node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].nil?
-                 attraction.hours=("N/A")
+                 x.hours=("N/A")
               else 
                 node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].text.strip
                   if node6 == nil
-                    attraction.hours=("N/A")
+                    x.hours=("N/A")
                   elsif node6.include?('EMH')
                     node7 = attraction_info.css('.calattraction .filterableitem .caltime')[1].text.strip
                        hours = "#{node6} " + "/ #{node7}"
-                       attraction.hours=(hours)
+                       x.hours=(hours)
                   else 
                        hours = "#{node6}" 
-                       attraction.hours=(hours)
+                       x.hours=(hours)
                   end 
               end  
           end
