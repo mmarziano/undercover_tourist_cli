@@ -41,61 +41,60 @@ class Scraper
         end 
     end  
     
-  def self.attraction_details(selected_attraction, city)
-        x = Attractions.find_by_name(selected_attraction)
+  def self.attraction_details(attraction, city)
         city.attractions.select.with_index do |val, index|
-          if val == selected_attraction
+          if val == attraction.name
             @selected_attraction_url = city.urls[index]
-            #x.url=(@selected_attraction_url)
+            attraction.url=(@selected_attraction_url)
           end
         end
         attraction_info = Nokogiri::HTML(open(@selected_attraction_url))
         node = attraction_info.css('.reviewpads')
           if node.empty?
-            x.rating=("N/A")
+            attraction.rating=("N/A")
           else
             node1 = attraction_info.css('.reviewpads').attribute('class').value.split[1].split('star')
-            x.rating=(node1[0].capitalize + " Stars")
+            attraction.rating=(node1[0].capitalize + " Stars")
           end
         node2 = attraction_info.css('.about-attraction').children.css('p').text
             if node2.empty?
-              x.description=("N/A")
+              attraction.description=("N/A")
             else
-             x.description=(node2)
+             attraction.description=(node2)
             end
         node3 = attraction_info.css('.daydetail')
              if node3.nil?
-               x.current_crowd_rating=("N/A")
+               attraction.current_crowd_rating=("N/A")
              else
-               x.current_crowd_rating=(node3.first.text)
+               attraction.current_crowd_rating=(node3.first.text)
              end
         node4 = attraction_info.css('.fff-attractions').children.css('li').children.css('a')
                node4.each do |node|
-                 x.priority_attractions << node.text
+                 attraction.priority_attractions << node.text
                end
-             if x.priority_attractions.empty?
-               x.priority_attractions=("N/A")
+             if attraction.priority_attractions.empty?
+               attraction.priority_attractions=("N/A")
              end
         node5 = attraction_info.css('.calattraction').attribute('data-filter-ids').value
               if node5.include?('None')
-                x.hours=("N/A")
+                attraction.hours=("N/A")
               elsif 
                 node6 = attraction_info.css('calattraction .filterableitem').nil?
-                  x.hours=("N/A")
+                  attraction.hours=("N/A")
               elsif 
                 node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].nil?
-                 x.hours=("N/A")
+                 attraction.hours=("N/A")
               else 
                 node6 = attraction_info.css('.calattraction .filterableitem .caltime')[0].text.strip
                   if node6 == nil
-                    x.hours=("N/A")
+                    attraction.hours=("N/A")
                   elsif node6.include?('EMH')
                     node7 = attraction_info.css('.calattraction .filterableitem .caltime')[1].text.strip
                        hours = "#{node6} " + "/ #{node7}"
-                       x.hours=(hours)
+                       attraction.hours=(hours)
                   else 
                        hours = "#{node6}" 
-                       x.hours=(hours)
+                       attraction.hours=(hours)
                   end 
               end  
           end
