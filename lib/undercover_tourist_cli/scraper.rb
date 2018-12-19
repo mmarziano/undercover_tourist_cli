@@ -45,6 +45,7 @@ class Scraper
             @selected_attraction_url = city.urls[index]
           end
         end 
+        binding.pry
         attraction_info = Nokogiri::HTML(open(@selected_attraction_url))
         node = attraction_info.css('.reviewpads')
           if node.empty?

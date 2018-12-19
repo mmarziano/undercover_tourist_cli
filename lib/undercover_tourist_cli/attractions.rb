@@ -29,6 +29,10 @@ class Attractions
     self.all.select {|a| a.city == city}
   end
   
+  def find_by_name(name)
+    self.all.select {|a| a.name == name}
+  end
+  
   def self.name 
     @name
   end 
