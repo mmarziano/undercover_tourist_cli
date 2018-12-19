@@ -31,11 +31,10 @@ class UndercoverTouristCli::Cli
         puts "Below is a list of attractions:"
         puts "-------------------------------"
           i = 1
-          Attractions.all.each do |attraction|
-            if attraction.city == city
-              puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
+          city.attractions.each do |attraction|
+              puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
               i += 1
-            end
+         
           end 
         puts "Please select a number from the list above."
         select_attraction(city)
@@ -47,12 +46,12 @@ class UndercoverTouristCli::Cli
         puts "Invalid entry. Please try again."
         select_attraction(city)
       end 
-        Attractions.all.select.with_index do |val, index|
-          if val.city.name == city.name && input == index.to_i + 1
+        city.attractions.select.with_index do |val, index|
+          if input == index.to_i + 1
             @selected_attraction = val
           end
         end 
-    puts "Gathering details for #{@selected_attraction.name}..."
+    puts "Gathering details for #{@selected_attraction}..."
     Scraper.attraction_details(@selected_attraction, city)
     results(@selected_attraction, city)
   end

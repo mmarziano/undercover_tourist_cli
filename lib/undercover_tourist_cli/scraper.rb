@@ -40,8 +40,8 @@ class Scraper
     end  
     
   def self.attraction_details(attraction, city)
-        Attractions.all.select.with_index do |val, index|
-          if val.name == attraction.name
+        city.attractions.select.with_index do |val, index|
+          if val == attraction
             @selected_attraction_url = city.urls[index]
           end
         end 
