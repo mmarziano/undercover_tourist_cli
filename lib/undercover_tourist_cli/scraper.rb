@@ -35,7 +35,7 @@ class Scraper
         node.each do |node|
            url = node.children.css('a').attribute('href')
               if url != nil 
-               @url_list << @base_path + url.value
+               @url_list << @base_path + url.value unless @url_list.include?(@base_path + url.value)
                city.urls=(@url_list)
             end
         end 
