@@ -10,17 +10,22 @@ class UndercoverTouristCli::Cli
     city_selector
   end
 
-  def city_selector 
+  def city_selector
     input = gets.strip.downcase.split(' ').join('-')
-    city = City.new(input)
-    Scraper.scrape_city_summary(city)
-    puts "Great choice! Here's some more information on " + city.name.colorize(:yellow) + ". " + city.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
-    choice = gets.strip.downcase
-      if choice == "Y" || choice == "y"
-        attraction_list(city)
-      else 
-        call
-      end
+    if input == "orlando" || input == "los-angeles" || input == "san-diego"
+      city = City.new(input)
+    else 
+      puts "Invalid entry. Please try again."
+      city_selector
+    end 
+      Scraper.scrape_city_summary(city)
+      puts "Great choice! Here's some more information on " + city.name.colorize(:yellow) + ". " + city.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
+      choice = gets.strip.downcase
+        if choice == "Y" || choice == "y"
+          attraction_list(city)
+        else 
+          call
+        end
   end 
 
   
