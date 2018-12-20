@@ -21,7 +21,6 @@ class Attractions
     @@all 
   end 
   
-  
   def find_by_city(city)
     self.all.select {|a| a.city == city}
   end
