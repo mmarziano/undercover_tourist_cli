@@ -89,17 +89,13 @@ class UndercoverTouristCli::Cli
               end 
             puts "Please select a number from the list above."
             select_attraction(city)
-        elsif
+       elsif
           choice == "N" || choice == "n"
           puts "Would you like to explore another city (Y/N)?"
           input = gets.strip.downcase
-            if input == "y"
-              call
-            else 
-              puts "Happy travels!"
-              exit
-            end
-        else 
+            call if input == "y"
+            exit if input == "n" 
+       else 
           puts "Invalid entry.  Please type Y for yes or N for no."
           pick_attraction_repeat(city)
       end 
