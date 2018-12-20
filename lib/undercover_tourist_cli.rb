@@ -1,6 +1,5 @@
 
-
-class UndercoverTouristCli::Cli 
+class UndercoverTouristCli::CLI 
   
     def call
       puts "---------------------------------"

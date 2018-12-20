@@ -3,4 +3,4 @@
 
 require_relative '../config/environment'
 
-UndercoverTouristCli::Cli.new.call
+UndercoverTouristCli::CLI.new.call

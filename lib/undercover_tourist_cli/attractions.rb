@@ -1,5 +1,4 @@
 
-
 class Attractions 
   attr_accessor :name, :description, :rating, :current_crowd_rating, :priority_attractions, :hours, :list, :city, :url
   
