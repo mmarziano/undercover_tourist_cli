@@ -78,28 +78,32 @@ class UndercoverTouristCli::Cli
   
   def pick_attraction_repeat(city)
     choice = gets.strip.downcase
-    if choice == "Y" || choice == "y"
-      puts "-------------------------------"
-      puts "Below is a list of attractions:"
-      puts "-------------------------------"
-            i = 1
-            city.attractions.each do |attraction|
-              puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
-              i += 1
-            end 
-          puts "Please select a number from the list above."
-          select_attraction(city)
-      else 
-      puts "Would you like to explore another city (Y/N)?"
-      input = gets.strip.downcase
-        if input == "y"
-          call
+      if choice == "Y" || choice == "y"
+        puts "-------------------------------"
+        puts "Below is a list of attractions:"
+        puts "-------------------------------"
+              i = 1
+              city.attractions.each do |attraction|
+                puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
+                i += 1
+              end 
+            puts "Please select a number from the list above."
+            select_attraction(city)
+        elsif
+          choice == "N" || choice == "n"
+          puts "Would you like to explore another city (Y/N)?"
+          input = gets.strip.downcase
+            if input == "y"
+              call
+            else 
+              puts "Happy travels!"
+              exit
+            end
         else 
-          puts "Happy travels!"
-          exit
-        end
-    end
-  end 
+          puts "Invalid entry.  Please type Y for yes or N for no."
+          pick_attraction_repeat(city)
+      end 
+     end
   
     def results(attraction, city)
       
