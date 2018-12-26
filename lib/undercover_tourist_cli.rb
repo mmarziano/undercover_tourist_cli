@@ -9,106 +9,87 @@ class UndercoverTouristCli::CLI
       city_selector
     end
   
-    def city_selector
-      input = gets.strip.downcase.split(' ').join('-')
-      
-      if input == "orlando" || input == "los-angeles" || input == "san-diego"
-          if City.find_by_name(input) 
-            city = City.find_by_name(input)
+      def city_selector
+        input = gets.strip.downcase.split(' ').join('-')
+          if input == "orlando" || input == "los-angeles" || input == "san-diego"
+              if City.find_by_name(input) 
+                city = City.find_by_name(input)
+              else 
+                city = City.new(input)
+              end
           else 
-            city = City.new(input)
-          end
-      else 
-        puts "Invalid entry. Please try again."
-        city_selector
-      end 
-        Scraper.scrape_city_summary(city) if city.city_summary == nil
-        puts "Great choice! Here's some more information on " + city.name.colorize(:yellow) + ". " + city.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
-          choice = gets.strip.downcase
-            if choice == "Y" || choice == "y"
-              attraction_list(city)
-            else 
-              call
-            end
-     end 
-
-  
-    def attraction_list(city)
-      puts "Gathering information..."
-        if city.attractions.empty?
-          Scraper.scrape_city_attractions(city)
-          puts "-------------------------------"
-          puts "Below is a list of attractions:"
-          puts "-------------------------------"
-            i = 1
-            city.attractions.each do |attraction|
-                puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
-                i += 1
-            end 
-          puts "Please select a number from the list above."
-          select_attraction(city)
-        else 
-          puts "-------------------------------"
-          puts "Below is a list of attractions:"
-          puts "-------------------------------"
-            i = 1
-            city.attractions.each do |attraction|
-                puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
-                i += 1
-            end 
-          puts "Please select a number from the list above."
-          select_attraction(city)
-        end
-     end 
-  
-    def select_attraction(city)
-      input = gets.strip.to_i 
-        if input > Attractions.all.count || input < 0 
-          puts "Invalid entry. Please try again."
-          select_attraction(city)
-        end 
-          city.attractions.select.with_index do |val, index|
-            if input == index.to_i + 1
-              @selected_attraction = val
-            end
+            puts "Invalid entry. Please try again."
+            city_selector
           end 
-      puts "Gathering details for #{@selected_attraction}..."
-      Scraper.attraction_details(Attractions.find_by_name(@selected_attraction), city)
-      results(Attractions.find_by_name(@selected_attraction), city)
-    end
+          Scraper.scrape_city_summary(city) if city.city_summary == nil
+          puts "Great choice! Here's some more information on " + city.name.colorize(:yellow) + ". " + city.city_summary + " Would you like to learn more about this city's attractions? (Y/N)".colorize(:red)
+            choice = gets.strip.downcase
+              if choice == "Y" || choice == "y"
+                attraction_list(city)
+              else 
+                exit
+              end
+       end 
+
+      def attraction_list(city)
+        puts "Gathering information..."
+        Scraper.scrape_city_attractions(city) if city.attractions.empty?
+        puts "-------------------------------"
+        puts "Below is a list of attractions:"
+        puts "-------------------------------"
+          i = 1
+          city.attractions.each do |attraction|
+              puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
+              i += 1
+          end 
+        puts "Please select a number from the list above."
+        select_attraction(city)
+       end 
+  
+      def select_attraction(city)
+        input = gets.strip.to_i 
+          if input > Attractions.all.count || input < 0 
+            puts "Invalid entry. Please try again."
+            select_attraction(city)
+          end 
+        selected_attraction = city.attractions[input - 1]
+        puts "Gathering details for #{selected_attraction.name}..."
+        Scraper.attraction_details(Attractions.find_by_name(selected_attraction.name), city)
+        results(Attractions.find_by_name(selected_attraction.name), city)
+      end
   
   
-    def pick_attraction_repeat(city)
-      choice = gets.strip.downcase
-      case choice 
-      when "y"
+      def pick_attraction_repeat(city)
+        choice = gets.strip.downcase
+        case choice 
+          when "y"
           puts "-------------------------------"
           puts "Below is a list of attractions:"
           puts "-------------------------------"
                 i = 1
                 city.attractions.each do |attraction|
-                  puts "#{i}.".colorize(:red) + " #{attraction}".colorize(:blue)
+                  puts "#{i}.".colorize(:red) + " #{attraction.name}".colorize(:blue)
                   i += 1
                 end 
               puts "Please select a number from the list above."
               select_attraction(city)
-      when "n"
-          puts "Would you like to explore another city (Y/N)?"
-            input = gets.strip.downcase
-            case input 
-              when "y"
-                call
-              when "n"
-                exit 
-              else
-                puts "Invalid entry.  Please type Y for yes or N for no."
-                pick_attraction_repeat(city)
-              end 
-        else 
-            puts "Invalid entry.  Please type Y for yes or N for no."
-            pick_attraction_repeat(city)
+          when "n"
+            puts "Would you like to explore another city (Y/N)?"
+              input = gets.strip.downcase
+              case input 
+                when "y"
+                  call
+                when "n"
+                  exit 
+                else
+                  puts "Invalid entry.  Please type Y for yes or N for no."
+                  pick_attraction_repeat(city)
+                end 
+            else 
+              puts "Invalid entry.  Please type Y for yes or N for no."
+              pick_attraction_repeat(city)
+          end
         end
-     end
     
       def results(attraction, city)
         puts "---------------------------------------------------".colorize(:red)

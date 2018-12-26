@@ -19,7 +19,6 @@ class Scraper
       nodes.each do |node|
         if node.css('.tiletitle').text != "Attraction" 
           attraction = Attractions.new(node.css('.tiletitle').text)
-          binding.pry
           city.attractions << attraction unless city.attractions.include?(attraction) 
           url = node.children.css('a').attribute('href')
             if url != nil 
