@@ -54,7 +54,7 @@ class UndercoverTouristCli::CLI
           end 
         selected_attraction = city.attractions[input - 1]
         puts "Gathering details for #{selected_attraction.name}..."
-          if Attractions.find_by_name(selected_attraction) == nil 
+          if selected_attraction.description == nil 
             Scraper.attraction_details(Attractions.find_by_name(selected_attraction.name), city)
           end
         results(Attractions.find_by_name(selected_attraction.name), city)
