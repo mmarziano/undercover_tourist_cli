@@ -29,7 +29,7 @@ class UndercoverTouristCli::CLI
               else 
                 exit
               end
-       end 
+      end 
 
       def attraction_list(city)
         puts "Gathering information..."
@@ -44,7 +44,7 @@ class UndercoverTouristCli::CLI
           end 
         puts "Please select a number from the list above."
         select_attraction(city)
-       end 
+      end 
   
       def select_attraction(city)
         input = gets.strip.to_i 
@@ -54,7 +54,9 @@ class UndercoverTouristCli::CLI
           end 
         selected_attraction = city.attractions[input - 1]
         puts "Gathering details for #{selected_attraction.name}..."
-        Scraper.attraction_details(Attractions.find_by_name(selected_attraction.name), city)
+          if Attractions.find_by_name(selected_attraction) == nil 
+            Scraper.attraction_details(Attractions.find_by_name(selected_attraction.name), city)
+          end
         results(Attractions.find_by_name(selected_attraction.name), city)
       end
   
