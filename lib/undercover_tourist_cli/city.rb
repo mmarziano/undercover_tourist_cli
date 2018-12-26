@@ -14,5 +14,9 @@ class City
     @@all 
   end 
   
+  def self.find_by_name(name)
+    @@all.detect {|a| a.name.downcase == name.downcase}
+  end
+  
 end 
     

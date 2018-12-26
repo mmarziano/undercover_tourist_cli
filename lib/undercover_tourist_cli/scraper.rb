@@ -15,40 +15,22 @@ class Scraper
   
   def self.scrape_city_attractions(city)
     @city_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
-    node = @city_page.css('.tiletitle')
-      node.each do |node|
-        if node.text != "Attraction" 
-          city.attractions << node.text unless city.attractions.include?(node.text) 
-        end 
-      end 
-      city.attractions.each do |object|
-        new = Attractions.new(object) 
-        new.city=(city) 
-      end 
-      scrape_urls(city)
-    end   
-    
-   def self.scrape_urls(city)
-      @attraction_page = Nokogiri::HTML(open(@base_path + "/#{city.name.downcase}" +"/attractions"))
-      node = @attraction_page.css('.tile')
-      @url_list = []
-        node.each do |node|
-           url = node.children.css('a').attribute('href')
-              if url != nil 
-               @url_list << @base_path + url.value unless @url_list.include?(@base_path + url.value)
-               city.urls=(@url_list)
+    nodes = @city_page.css('.tile')
+      nodes.each do |node|
+        if node.css('.tiletitle').text != "Attraction" 
+          attraction = Attractions.new(node.css('.tiletitle').text)
+          binding.pry
+          city.attractions << attraction unless city.attractions.include?(attraction) 
+          url = node.children.css('a').attribute('href')
+            if url != nil 
+              attraction.url=(@base_path + url.value) 
             end
         end 
-    end  
+      end 
+    end   
     
   def self.attraction_details(attraction, city)
-        city.attractions.select.with_index do |val, index|
-          if val == attraction.name
-            @selected_attraction_url = city.urls[index]
-            attraction.url=(@selected_attraction_url)
-          end
-        end
-        attraction_info = Nokogiri::HTML(open(@selected_attraction_url))
+        attraction_info = Nokogiri::HTML(open(attraction.url))
         node = attraction_info.css('.reviewpads')
           if node.empty?
             attraction.rating=("N/A")
